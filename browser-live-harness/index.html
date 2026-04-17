@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zama Live Browser Harness</title>
+    <script type="module" src="/src/main.ts"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        background: #08111a;
+        color: #e6f0ff;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        background:
+          radial-gradient(circle at top left, rgba(14, 165, 233, 0.18), transparent 28%),
+          radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.14), transparent 30%),
+          #08111a;
+      }
+
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+
+      p {
+        color: #b6c6dc;
+      }
+
+      button {
+        cursor: pointer;
+        border-radius: 10px;
+        border: 1px solid #3556a8;
+        background: #102446;
+        color: #eff6ff;
+        padding: 10px 14px;
+        margin-bottom: 20px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      li {
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid #23345f;
+        background: rgba(11, 18, 32, 0.74);
+      }
+
+      .pass {
+        border-color: #1f7a42;
+      }
+
+      .fail {
+        border-color: #a33945;
+      }
+
+      code {
+        color: #9ce7b4;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Zama Live Browser Harness</h1>
+      <p>
+        Browser pass against a fresh live local Hardhat deployment using a local wallet-style provider
+        plus helper-backed encrypted input and decrypt steps. This proves the live browser contract
+        flow without pretending a browser relayer service exists locally.
+      </p>
+      <button id="run-live">Run Live Flow</button>
+      <ul id="results"></ul>
+    </main>
+  </body>
+  </html>

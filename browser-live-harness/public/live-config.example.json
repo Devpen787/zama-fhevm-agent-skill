@@ -1,0 +1,17 @@
+{
+  "contractAddress": "0x0000000000000000000000000000000000000000",
+  "privateKey": "HARDHAT_DEFAULT_ACCOUNT_PRIVATE_KEY",
+  "expectedChainId": 31337,
+  "rpcPath": "/rpc",
+  "userIndex": 0,
+  "fhevmInstance": {
+    "aclContractAddress": "0x50157CFfD6bBFA2DECe204a89ec419c23ef5755D",
+    "kmsContractAddress": "0x901F8942346f7AB3a01F6D7613119Bca447Bb030",
+    "inputVerifierContractAddress": "0x812b06e1CDCE800494b79fFE4f925A504a9A9810",
+    "verifyingContractAddressDecryption": "0x5ffdaAB0373E62E2ea2944776209aEf29E631A64",
+    "verifyingContractAddressInputVerification": "0x812b06e1CDCE800494b79fFE4f925A504a9A9810",
+    "gatewayChainId": 10901,
+    "relayerUrl": "http://127.0.0.1:4175/rpc",
+    "chainId": 31337
+  }
+}

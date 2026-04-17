@@ -1,0 +1,14 @@
+[
+  {
+    "id": "live-submit",
+    "text": "live-submit\n          PASS: {\"txHash\":\"0xca291f65e1008d99b168b6d3a519e6d05cb12f6cdde021d80815b7dfbfd17d34\",\"contractAddress\":\"0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1\",\"startTime\":1776437311,\"endTime\":1776437491}"
+  },
+  {
+    "id": "live-finalize",
+    "text": "live-finalize\n          PASS: finalized=true"
+  },
+  {
+    "id": "live-decrypt",
+    "text": "live-decrypt\n          PASS: {\"getter\":\"getEncryptedYesVotes\",\"signer\":\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\",\"encryptedHandle\":\"0xeaf0281123c3a3ad9ceb39a68c7d9795986b6b1a22ff0000000000007a690400\",\"clearValue\":1}"
+  }
+]

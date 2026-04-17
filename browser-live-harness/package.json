@@ -1,0 +1,19 @@
+{
+  "name": "zama-fhevm-agent-skill-browser-live-harness",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4175",
+    "build": "vite build",
+    "preview:local": "node preview-server.mjs"
+  },
+  "dependencies": {
+    "@zama-fhe/relayer-sdk": "^0.4.1",
+    "ethers": "^6.16.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10"
+  }
+}
