@@ -1,154 +1,108 @@
 # Zama FHEVM Agent Skill
 
-This repository is a submission scaffold for Zama’s `Bounty Track` challenge:
+This repository is a submission for Zama's `Bounty Track` challenge:
 
 - `Create FHEVM Skills for AI Coding Agents`
 
-The goal is to help an AI coding agent generate materially correct Zama / FHEVM code for confidential applications without falling into the most common implementation mistakes.
+The submission is a Zama-specific build system for AI coding agents. It keeps agents inside a documented, validated FHEVM path for one concrete confidential application target.
 
-## What This Repo Is
+## What It Does
 
-This repo is:
-
-- a `SKILL.md`-driven build system for AI coding agents
-- a compact reference layer for Zama / FHEVM-specific concerns
-- a validation surface for testing prompt-to-code generation
-
-This repo is not:
-
-- a generic privacy tutorial
-- a complete FHEVM documentation mirror
-- a finished product
-- a generic Solidity helper
-
-## What It Tries To Solve
-
-AI coding agents are increasingly used to generate application code, but they do not come with strong built-in knowledge of:
-
-- encrypted types
-- access-control patterns for encrypted state
-- proof-aware input handling
-- decryption and visibility rules
-- Zama / FHEVM-specific anti-patterns
-
-This repo exists to narrow that gap.
-
-## Intended Outcome
-
-Given a natural-language request such as:
+Given a prompt such as:
 
 - `Build a confidential voting contract using Zama FHEVM with encrypted vote values, tests, and a minimal frontend flow`
 
-the agent should be able to:
+the repository helps an agent:
 
-- reason about whether confidentiality is justified
-- generate a narrow contract flow
-- make access-control assumptions explicit
-- acknowledge proof-handling requirements
-- avoid obvious FHEVM mistakes
-- return code and notes that are reviewable instead of hand-wavy
+- use Zama/FHEVM primitives instead of generic Solidity habits
+- reason explicitly about encrypted inputs, ACL, proofs, and reveal rights
+- avoid common anti-patterns
+- land on a path that can be reviewed, replayed, compiled, and tested
 
-## Repo Structure
+## Strategic Fit
 
-### `SKILL.md`
+Zama is pushing toward confidential-finance-class applications where encrypted inputs, controlled disclosure, and correct ACL matter.
 
-The core instruction layer for the agent.
+This repository is aligned to that direction as developer infrastructure:
 
-### `references/`
+- it is not a finance product itself
+- it is a tool for reducing agent failure when building privacy-sensitive applications
 
-Compact Zama-specific guidance used by the skill:
+The validated demo target is confidential voting because it is the smallest proof target that still exercises:
 
-- anti-patterns
-- access control
-- input proofs
+- encrypted input
+- `inputProof`
+- explicit ACL
+- finalization
+- decrypt rights
+- frontend integration
+- tests
 
-### `examples/`
+## Repository Map
 
-One narrow validation target plus concrete example artifacts:
-
-- confidential voting
-- `confidential-voting-contract.sol`
-- `confidential-voting.test.ts`
-- `confidential-voting-frontend.ts`
-
-### `validation/`
-
-Prompt suite, review checklist, and results log.
-
-### reviewer-facing docs
-
+- `SKILL.md`
+  - core instruction layer for the agent
+- `references/`
+  - compact Zama-specific guidance on encrypted types, ACL, proofs, decryption, frontend flow, and anti-patterns
+- `templates/`
+  - validated starting points for contract, test, and frontend paths
+- `examples/`
+  - confidential-voting validation target and inspectable artifacts
+- `validation/`
+  - results log and run artifacts
 - `SUBMISSION_OVERVIEW.md`
-- `VIDEO_DEMO_SCRIPT.md`
-- `REPLAY_VALIDATION.md`
-- `SECURITY_STRESS_FORWARD_VIEW.md`
-- `STRESS_MATRIX.md`
-- `VERSION_GATE.md`
-
-## Validation Standard
-
-The output does not count as successful just because it looks plausible.
-
-It must:
-
-- stay inside scope
-- use confidentiality intentionally
-- make access rules explicit
-- acknowledge proof handling where relevant
-- avoid the known anti-patterns
-- be strong enough to review and refine as real code
-
-## Validated Core Path
-
-The current validated core path is:
-
-- one narrow confidential-voting contract
-- one Hardhat test file
-- one minimal frontend integration path
-- one prompt-to-code validation target
-
-What is already proven:
-
-- the contract template compiles in the official `zama-ai/fhevm-hardhat-template`
-- the test template passes as a targeted Hardhat suite
-- the skill now points at a compile-backed and test-backed validation surface instead of a generic privacy scaffold
-- the browser now proves a live wallet-connected `submit -> finalize -> decrypt` flow against a fresh local deployment through the hybrid harness
-
-Current proof artifact:
-
-- `validation/run3_core_demo_output.md`
-- `validation/run8_live_browser_hybrid_output.md`
-- `REPLAY_VALIDATION.md`
+  - concise reviewer brief
 - `LIVE_REPLAY.md`
-- `AGENT_DEMO_ARTIFACT.md`
+  - replay path for the live browser proof
+- `EXECUTION_COMPATIBILITY.md`
+  - how the repository behaves across strong-model, weak-model, and deterministic replay environments
 
-## Current Status
+## Validated Core
 
-This is an active submission scaffold with one validated core demo path.
+The validated narrow path is:
 
-It is still not a finalized submission because:
+- one confidential-voting contract
+- one hardened Hardhat test suite
+- one minimal frontend integration path
+- one live browser proof surface
 
-- the live browser path is hybrid-verified, not relayer-verified
-- no Sepolia or real relayer-network run has been performed yet
-- the broader submission narrative still needs tightening around the proven artifact
+Current evidence includes:
 
-## Recordable Demo
+- compile-backed validation in the official `zama-ai/fhevm-hardhat-template`
+- stress-extended Hardhat tests for malformed proof, wrong signer, wrong contract, boundary-time, decrypt authorization, and tally correctness cases
+- browser-driven `submit -> finalize -> decrypt` proof against a fresh local deployment
 
-If you want the working product in a recordable state, use:
+## What Is Proven
+
+- the skill is anchored to documented Zama/FHEVM primitives
+- the repository covers encrypted types, FHE operations, access control, input proofs, decryption patterns, frontend integration, testing, and anti-patterns
+- the confidential-voting target compiles, tests, and replays cleanly
+- the live browser proof shows the generated path can hold end to end on a fresh local deployment
+
+## Proof Boundary
+
+This submission makes one explicit boundary clear:
+
+- the browser owns the transaction path
+- encrypted input generation and final tally decrypt are helper-backed in the live local demo
+- this is not claiming Sepolia proof or a public relayer-backed browser run
+
+## Fastest Reviewer Path
+
+1. read `SUBMISSION_OVERVIEW.md`
+2. read `SKILL.md`
+3. inspect `examples/confidential-voting-contract.sol`
+4. inspect `examples/confidential-voting.test.ts`
+5. inspect `validation/results.md`
+6. inspect `LIVE_REPLAY.md`
+
+## Replay
+
+To replay the current proof:
 
 ```bash
 ./scripts/prepare_live_video_demo.sh
 ```
-
-That will:
-
-- sync the validated contract, tests, and helper scripts into the scratch Hardhat repo
-- run compile and test preflight checks
-- build the browser live harness
-- start the local Hardhat node if needed
-- start the local preview server in the foreground
-
-Leave that terminal open while recording.
-Use `Ctrl-C` when you are done.
 
 Then open:
 
@@ -156,15 +110,11 @@ Then open:
 http://127.0.0.1:4177/
 ```
 
-Expected results:
-
-- `live-submit`: `PASS`
-- `live-finalize`: `PASS`
-- `live-decrypt`: `PASS`
+and run the end-to-end proof in the browser.
 
 ## Validation Commands
 
-Current validation commands for the narrow demo target:
+For the narrow demo target:
 
 ```bash
 cd /tmp/zama-validation
@@ -172,8 +122,8 @@ npm run compile
 npx hardhat test test/ConfidentialVotingTemplate.ts
 ```
 
-## Rule
+## Standard
 
-If the skill only produces generic privacy-flavored Solidity output, it has failed.
+If the repository only helps an agent produce privacy-flavored Solidity that looks plausible, it is not doing its job.
 
-If it produces Zama-specific, reviewable, confidentiality-aware output with explicit assumptions and risks, it is doing the right job.
+If it helps an agent stay inside a Zama-specific, reviewable, replayable, and error-aware FHEVM path, it is doing the right job.

@@ -3,86 +3,651 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zama Live Browser Harness</title>
+    <title>Zama Agent Skill Proof</title>
     <script type="module" src="/src/main.ts"></script>
     <style>
       :root {
         color-scheme: dark;
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        background: #08111a;
-        color: #e6f0ff;
+        --bg: #08111a;
+        --bg-soft: #0d1723;
+        --surface: rgba(8, 15, 26, 0.82);
+        --surface-strong: rgba(10, 19, 33, 0.94);
+        --surface-soft: rgba(255, 255, 255, 0.03);
+        --line: rgba(145, 189, 244, 0.16);
+        --line-strong: rgba(145, 189, 244, 0.28);
+        --text: #eff4fb;
+        --text-soft: #ced9ea;
+        --muted: #90a6c2;
+        --accent: #a6d7ff;
+        --accent-soft: rgba(166, 215, 255, 0.14);
+        --emerald: #69dfa0;
+        --emerald-soft: rgba(105, 223, 160, 0.16);
+        --amber: #ffcb67;
+        --amber-soft: rgba(255, 203, 103, 0.18);
+        --fail: #ff8787;
+        --fail-soft: rgba(255, 135, 135, 0.15);
+        --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+        --mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--bg);
       }
 
       body {
         margin: 0;
-        padding: 24px;
+        min-height: 100vh;
+        color: var(--text);
+        font-family: var(--mono);
         background:
-          radial-gradient(circle at top left, rgba(14, 165, 233, 0.18), transparent 28%),
-          radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.14), transparent 30%),
-          #08111a;
+          radial-gradient(circle at 12% 10%, rgba(166, 215, 255, 0.2), transparent 26%),
+          radial-gradient(circle at 88% 82%, rgba(105, 223, 160, 0.14), transparent 24%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 28%),
+          linear-gradient(135deg, #08111a 0%, #0a1521 48%, #0c1a1f 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.26;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 80%);
       }
 
       main {
-        max-width: 980px;
+        max-width: 1220px;
         margin: 0 auto;
+        padding: 26px;
       }
 
-      h1 {
-        margin: 0 0 8px;
-        font-size: 28px;
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
       }
 
       p {
-        color: #b6c6dc;
+        line-height: 1.6;
+        color: var(--muted);
       }
 
       button {
         cursor: pointer;
-        border-radius: 10px;
-        border: 1px solid #3556a8;
-        background: #102446;
-        color: #eff6ff;
-        padding: 10px 14px;
-        margin-bottom: 20px;
+        border: 1px solid rgba(166, 215, 255, 0.35);
+        background: linear-gradient(180deg, rgba(24, 60, 96, 0.92), rgba(14, 34, 56, 0.95));
+        color: #f7fbff;
+        border-radius: 999px;
+        padding: 13px 18px;
+        font: inherit;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease;
       }
 
-      ul {
-        list-style: none;
-        padding: 0;
+      button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        border-color: rgba(166, 215, 255, 0.58);
+        box-shadow: 0 18px 34px rgba(7, 18, 34, 0.35);
+      }
+
+      button:disabled {
+        cursor: wait;
+        opacity: 0.72;
+      }
+
+      .frame {
         display: grid;
+        gap: 18px;
+      }
+
+      .panel {
+        position: relative;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(11, 18, 30, 0.92), rgba(8, 15, 25, 0.88));
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+        overflow: hidden;
+      }
+
+      .panel::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 22%);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.42fr) minmax(310px, 0.78fr);
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      .hero-main {
+        padding: 28px;
+        display: grid;
+        gap: 22px;
+        background:
+          radial-gradient(circle at 85% 20%, rgba(166, 215, 255, 0.12), transparent 24%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 32%);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        width: fit-content;
+        padding: 7px 11px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-soft);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .headline {
+        display: grid;
+        gap: 12px;
+        max-width: 760px;
+      }
+
+      .headline h1 {
+        font-family: var(--serif);
+        font-size: clamp(3rem, 7vw, 6rem);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
+        color: #f6f8fc;
+        max-width: 10ch;
+      }
+
+      .headline p {
+        max-width: 57ch;
+        color: var(--text-soft);
+        font-size: 15px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-soft);
+        font-size: 12px;
+      }
+
+      .status-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #7e8ea6;
+        box-shadow: 0 0 0 4px rgba(126, 142, 166, 0.14);
+      }
+
+      .status-running .status-dot {
+        background: var(--amber);
+        box-shadow: 0 0 0 4px var(--amber-soft);
+      }
+
+      .status-pass .status-dot {
+        background: var(--emerald);
+        box-shadow: 0 0 0 4px var(--emerald-soft);
+      }
+
+      .status-fail .status-dot {
+        background: var(--fail);
+        box-shadow: 0 0 0 4px var(--fail-soft);
+      }
+
+      .hero-bottom {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(250px, 0.92fr);
         gap: 12px;
       }
 
-      li {
-        padding: 14px;
-        border-radius: 12px;
-        border: 1px solid #23345f;
-        background: rgba(11, 18, 32, 0.74);
+      .quote-card,
+      .notes-card {
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 18px;
       }
 
-      .pass {
-        border-color: #1f7a42;
+      .section-tag {
+        margin-bottom: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 11px;
       }
 
-      .fail {
-        border-color: #a33945;
+      .prompt-copy {
+        font-family: var(--serif);
+        color: #f2f5fb;
+        font-size: clamp(1.15rem, 2vw, 1.55rem);
+        line-height: 1.25;
+        letter-spacing: -0.02em;
       }
 
-      code {
-        color: #9ce7b4;
+      .notes-card ul,
+      .mini-list,
+      .support-list {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 8px;
+        color: var(--text-soft);
+      }
+
+      .hero-rail {
+        padding: 26px 22px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .rail-header {
+        display: grid;
+        gap: 10px;
+      }
+
+      .rail-header h2,
+      .proof-area h2 {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-soft);
+      }
+
+      .rail-header p {
+        color: var(--text-soft);
+        font-size: 14px;
+      }
+
+      .rail-block {
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        display: grid;
+        gap: 8px;
+      }
+
+      .rail-block h3 {
+        color: #f6f8fc;
+        font-size: 15px;
+      }
+
+      .proof-strip {
+        display: grid;
+        grid-template-columns: 1.08fr repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .proof-tile {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(13, 23, 37, 0.94), rgba(10, 18, 29, 0.92));
+        padding: 18px;
+      }
+
+      .proof-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+
+      .proof-value {
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.45;
+        word-break: break-word;
+      }
+
+      .proof-value.lead {
+        color: var(--text-soft);
+        font-size: 14px;
+      }
+
+      .proof-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.16fr) minmax(300px, 0.84fr);
+        gap: 18px;
+      }
+
+      .proof-area,
+      .support-area {
+        padding: 22px;
+      }
+
+      .step-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 14px;
+      }
+
+      .step-card {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.025);
+      }
+
+      .step-card.running {
+        border-color: rgba(255, 203, 103, 0.4);
+        background: rgba(255, 203, 103, 0.08);
+      }
+
+      .step-card.pass {
+        border-color: rgba(105, 223, 160, 0.36);
+        background: rgba(105, 223, 160, 0.07);
+      }
+
+      .step-card.fail {
+        border-color: rgba(255, 135, 135, 0.4);
+        background: rgba(255, 135, 135, 0.08);
+      }
+
+      .step-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 13px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .step-card.running .step-badge {
+        background: var(--amber-soft);
+      }
+
+      .step-card.pass .step-badge {
+        background: var(--emerald-soft);
+      }
+
+      .step-card.fail .step-badge {
+        background: var(--fail-soft);
+      }
+
+      .step-name {
+        color: #f3f7fd;
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .step-help {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+
+      .step-detail {
+        color: var(--text-soft);
+        font-size: 12px;
+        line-height: 1.6;
+        word-break: break-word;
+      }
+
+      .support-area {
+        display: grid;
+        gap: 16px;
+      }
+
+      .support-block {
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        display: grid;
+        gap: 8px;
+      }
+
+      .support-block:last-of-type {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .support-block h3 {
+        color: #f5f8fc;
+        font-size: 15px;
+      }
+
+      details {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 13px;
+        color: var(--text-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .log-box {
+        min-height: 220px;
+        max-height: 340px;
+        overflow: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 16px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        color: var(--text-soft);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 1080px) {
+        .hero,
+        .proof-layout,
+        .proof-strip,
+        .hero-bottom {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding: 16px;
+        }
+
+        .hero-main,
+        .hero-rail,
+        .proof-area,
+        .support-area,
+        .proof-tile {
+          padding: 18px;
+        }
+
+        .headline h1 {
+          max-width: 9.5ch;
+        }
+
+        .prompt-copy {
+          font-size: 1.08rem;
+        }
+
+        .hero-actions {
+          align-items: stretch;
+        }
+
+        button,
+        .status-pill {
+          width: 100%;
+          justify-content: center;
+        }
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>Zama Live Browser Harness</h1>
-      <p>
-        Browser pass against a fresh live local Hardhat deployment using a local wallet-style provider
-        plus helper-backed encrypted input and decrypt steps. This proves the live browser contract
-        flow without pretending a browser relayer service exists locally.
-      </p>
-      <button id="run-live">Run Live Flow</button>
-      <ul id="results"></ul>
+      <div class="frame">
+        <section class="hero">
+          <div class="panel hero-main">
+            <span class="eyebrow">Zama Bounty Track Submission</span>
+
+            <div class="headline">
+              <h1>Agent Skill to Working FHEVM App</h1>
+              <p>
+                A Zama-specific skill for AI coding agents, shown through one prompt and one live
+                proof path.
+              </p>
+            </div>
+
+            <div class="hero-actions">
+              <button id="run-live">Run End-to-End Proof</button>
+              <div id="overall-status" class="status-pill status-idle">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span id="overall-status-text">Ready: run the proof on demand</span>
+              </div>
+            </div>
+
+            <div class="hero-bottom">
+              <div class="quote-card">
+                <div class="section-tag">Prompt Under Test</div>
+                <div class="prompt-copy">
+                  Build a confidential voting contract using Zama FHEVM with encrypted vote values,
+                  tests, and a minimal frontend flow.
+                </div>
+              </div>
+
+              <div class="notes-card">
+                <div class="section-tag">What This Shows</div>
+                <ul class="mini-list">
+                  <li>Documented Zama / FHEVM patterns.</li>
+                  <li>Compile, tests, and live browser proof.</li>
+                  <li>Clear proof boundary.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel hero-rail">
+            <div class="rail-header">
+              <h2>Why This Matters</h2>
+              <p>
+                The brief is about AI agent skills. This page shows what the skill enforces, what the
+                proof covers, and where the boundary sits.
+              </p>
+            </div>
+
+            <div class="rail-block">
+              <h3>Zama-specific reasoning</h3>
+              <ul class="support-list">
+                <li>Encrypted types and proof-aware inputs are explicit.</li>
+                <li>ACL and reveal logic are decided up front.</li>
+              </ul>
+            </div>
+
+            <div class="rail-block">
+              <h3>Error prevention</h3>
+              <ul class="support-list">
+                <li>Anti-patterns, validation prompts, and stress checks are built in.</li>
+                <li>The skill is shaped to avoid fake FHEVM output.</li>
+              </ul>
+            </div>
+
+            <div class="rail-block">
+              <h3>Boundary honesty</h3>
+              <ul class="support-list">
+                <li>The browser owns the transaction path.</li>
+                <li>Encrypted input generation and final decrypt are helper-backed.</li>
+              </ul>
+            </div>
+          </aside>
+        </section>
+
+        <section class="proof-strip">
+            <div class="proof-tile">
+            <div class="proof-label">Focus</div>
+            <div class="proof-value lead">
+              AI agent skill for Zama / FHEVM, proven through one narrow confidential-app path.
+            </div>
+          </div>
+          <div class="proof-tile">
+            <div class="proof-label">Current Contract</div>
+            <div class="proof-value" id="metric-contract">No contract deployed yet</div>
+          </div>
+          <div class="proof-tile">
+            <div class="proof-label">Run Window</div>
+            <div class="proof-value" id="metric-window">Waiting for operator-controlled run</div>
+          </div>
+          <div class="proof-tile">
+            <div class="proof-label">Outcome</div>
+            <div class="proof-value" id="metric-result">No result yet</div>
+          </div>
+        </section>
+
+        <section class="proof-layout">
+          <div class="panel proof-area">
+            <h2>Live Proof Sequence</h2>
+            <ol id="step-list" class="step-list"></ol>
+          </div>
+
+          <div class="panel support-area">
+            <div class="support-block">
+              <h3>What The Run Proves</h3>
+              <ul class="support-list">
+                <li>Fresh local deployment.</li>
+                <li>Encrypted vote submission.</li>
+                <li>Finalization and visible result.</li>
+                <li>Browser flow aligned with the repo path.</li>
+              </ul>
+            </div>
+
+            <div class="support-block">
+              <h3>Proof Boundary</h3>
+              <ul class="support-list">
+                <li>This is a live local proof, not a Sepolia or public relayer demo.</li>
+                <li>The browser is real; encrypted input and final decrypt use local helpers.</li>
+                <li>The goal is a replayable working FHEVM path.</li>
+              </ul>
+            </div>
+
+            <details>
+              <summary>Open Technical Log</summary>
+              <div id="log-box" class="log-box">Waiting for run...</div>
+            </details>
+          </div>
+        </section>
+      </div>
     </main>
   </body>
-  </html>
+</html>

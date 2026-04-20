@@ -126,7 +126,6 @@ Logs:
 
 Replay notes:
   - $REPO_ROOT/LIVE_REPLAY.md
-  - $REPO_ROOT/AGENT_DEMO_ARTIFACT.md
 
 This script will now keep the preview server running in the foreground.
 Leave this terminal open while recording. Use Ctrl-C when you are done.

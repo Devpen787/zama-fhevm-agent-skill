@@ -2,8 +2,8 @@
 
 Purpose:
 
-- replay the current `hybrid live pass`
-- bring the browser harness into a recordable state quickly
+- replay the current hybrid live pass
+- bring the browser harness into a reviewable state quickly
 
 What this replay proves:
 
@@ -20,9 +20,7 @@ Important boundary:
 - encrypted input generation and tally decryption are provided by local Hardhat helpers
 - this is not a real browser-relayer proof
 
-## One-command setup
-
-Use:
+## One-command Setup
 
 ```bash
 ./scripts/prepare_live_video_demo.sh
@@ -38,10 +36,9 @@ That script will:
 6. start the local Hardhat node on `127.0.0.1:8545` if needed
 7. start the local preview server on `127.0.0.1:4177` in the foreground
 
-Keep that terminal open while recording.
-Use `Ctrl-C` when you are done.
+Keep that terminal open while replaying.
 
-## Recording URL
+## Replay URL
 
 After the script succeeds, open:
 
@@ -49,7 +46,10 @@ After the script succeeds, open:
 http://127.0.0.1:4177/
 ```
 
-The page auto-runs the flow.
+The page should load in a ready state.
+Then click:
+
+- `Run End-to-End Proof`
 
 Expected browser result:
 
@@ -64,7 +64,7 @@ The prep script writes logs to:
 - `/tmp/zama-live-video-hardhat.log`
 - `/tmp/zama-live-video-preview.log`
 
-## Current proof artifacts
+## Current Proof Artifacts
 
 - `validation/run8_live_browser_hybrid_output.md`
 - `output/playwright/run14-live-browser-hybrid-pass.png`

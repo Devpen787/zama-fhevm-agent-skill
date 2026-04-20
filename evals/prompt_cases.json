@@ -1,0 +1,77 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "core_confidential_voting",
+      "prompt": "Build a confidential voting contract using Zama FHEVM with encrypted vote values, clear access control, tests, and a minimal frontend flow for submitting a vote and revealing results at the end of the voting period.",
+      "required_files": [
+        "SKILL.md",
+        "references/encrypted-types.md",
+        "references/access-control.md",
+        "references/input-proofs.md",
+        "references/decryption-patterns.md",
+        "templates/contract-template.sol",
+        "templates/test-template.ts",
+        "examples/confidential-voting-contract.sol",
+        "examples/confidential-voting.test.ts",
+        "validation/results.md",
+        "validation/run3_core_demo_output.md"
+      ],
+      "required_skill_terms": [
+        "inputProof",
+        "FHE.fromExternal(...)",
+        "userDecrypt",
+        "access-control check",
+        "validated actor-specific reveal path"
+      ],
+      "required_results_terms": [
+        "## Run 3",
+        "Status:",
+        "- pass"
+      ]
+    },
+    {
+      "id": "frontend_decrypt_boundary",
+      "prompt": "Build the frontend flow for a confidential Zama FHEVM app so a user can submit encrypted input and an authorized party can decrypt results with clear boundaries.",
+      "required_files": [
+        "SKILL.md",
+        "references/frontend-integration.md",
+        "references/decryption-patterns.md",
+        "examples/confidential-voting-frontend.ts",
+        "validation/run7_browser_harness_output.md",
+        "validation/run8_live_browser_hybrid_output.md"
+      ],
+      "required_skill_terms": [
+        "frontend integration",
+        "documented relayer SDK `userDecrypt` path",
+        "do not imply production readiness"
+      ],
+      "required_results_terms": [
+        "Run 7",
+        "Run 8",
+        "browser"
+      ]
+    },
+    {
+      "id": "security_and_stress_gate",
+      "prompt": "Build a Zama FHEVM confidential app path with explicit stress, ACL, and malformed-input handling so the generated code is reviewable and not just plausible.",
+      "required_files": [
+        "SKILL.md",
+        "references/common-anti-patterns.md",
+        "validation/run5_deeper_stress_output.md",
+        "validation/run6_security_hardening_output.md"
+      ],
+      "required_skill_terms": [
+        "anti-pattern check",
+        "proof check",
+        "skip proof-handling for encrypted user inputs",
+        "claim deployment is safe"
+      ],
+      "required_results_terms": [
+        "Run 5",
+        "Run 6",
+        "pass"
+      ]
+    }
+  ]
+}

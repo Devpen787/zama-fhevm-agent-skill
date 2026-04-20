@@ -6,29 +6,38 @@ This repository is built for Zama’s `Bounty Track` prompt:
 
 - `Create FHEVM Skills for AI Coding Agents`
 
-The submission is not a generic docs wrapper. It is a compact build system for AI coding agents that:
+It is a compact build system for AI coding agents that:
 
-- constrains code generation to documented FHEVM patterns
-- forces reasoning about encrypted types, ACL, proofs, and reveal logic
+- constrains generation to documented FHEVM patterns
+- forces reasoning about encrypted inputs, ACL, proofs, and reveal logic
 - includes a concrete validation target
-- is backed by compile and test evidence
+- is backed by compile, test, and live replay evidence
 
-## What Makes This Different
+## Strategic Fit
 
-Many low-quality submissions in this category will likely look like:
+Zama is pushing toward confidential-finance-class applications where implementation details matter:
 
-- prompt packs
-- docs summaries
-- generic example collections
-- privacy-flavored Solidity with weak FHE specificity
+- encrypted inputs
+- explicit ACL
+- selective disclosure
+- controlled reveal logic
 
-This repository is trying to do something narrower and more operational:
+This repository is aligned to that direction as developer infrastructure. It is not a finance product. It is a tool for keeping agents inside the correct path when building privacy-sensitive applications.
 
-- `SKILL.md` provides the build contract for the agent
-- `references/` encode the highest-risk FHEVM reasoning steps
-- `templates/` provide proof-bearing defaults
-- `examples/` make the validated path inspectable
-- `validation/` records what was tested and what passed
+## What Makes It Distinct
+
+The repository combines:
+
+- `SKILL.md`
+  - build instructions for the agent
+- `references/`
+  - high-risk FHEVM reasoning steps
+- `templates/`
+  - validated defaults for contract, test, and frontend paths
+- `examples/`
+  - one inspectable confidential-voting path
+- `validation/`
+  - results and run artifacts
 
 ## Validated Core
 
@@ -49,40 +58,30 @@ See:
 - `validation/results.md`
 - `validation/run3_core_demo_output.md`
 - `validation/run8_live_browser_hybrid_output.md`
+- `LIVE_REPLAY.md`
 
 ## Why Confidential Voting
 
-Confidential voting is not the product thesis.
-
-It is the narrowest believable demo target that still exercises:
+Confidential voting is the validation target because it exercises:
 
 - encrypted input
-- typed `externalE...` contract boundaries
+- typed `externalE...` boundaries
 - `inputProof`
 - contract self-access
 - explicit reveal rights
 - client-side decryption flow
 - tests
 
-That makes it a strong validation target for the skill.
+It is the smallest validated proof target, not the full limit of the repository’s intended application class.
 
-## Repository Walkthrough
-
-Start here:
+## Reviewer Walkthrough
 
 1. `README.md`
 2. `SKILL.md`
-3. `examples/confidential-voting.md`
-4. `examples/confidential-voting-contract.sol`
-5. `examples/confidential-voting.test.ts`
-6. `validation/run3_core_demo_output.md`
-
-If you want the shortest review path:
-
-1. read this file
-2. read `SKILL.md`
-3. inspect the example contract and test
-4. inspect the Run 3 validation artifact
+3. `examples/confidential-voting-contract.sol`
+4. `examples/confidential-voting.test.ts`
+5. `validation/results.md`
+6. `LIVE_REPLAY.md`
 
 ## What Is Proven vs Not Proven
 
@@ -90,8 +89,8 @@ Proven:
 
 - the skill is anchored to documented FHEVM primitives
 - the narrow contract/test target compiles and passes
-- the repo now encodes a real, replayable validation loop
-- the browser now proves a live wallet-connected hybrid path on a fresh local deployment
+- the repository encodes a real validation loop
+- the browser proves a live wallet-connected hybrid path on a fresh local deployment
 
 Not yet proven:
 
@@ -101,6 +100,4 @@ Not yet proven:
 
 ## Evaluation Claim
 
-The strongest claim this repository can make honestly is:
-
-It helps an AI coding agent stay inside a real, documented, and validated FHEVM implementation path for a concrete confidential app, while reducing common mistakes around proofs, ACL, reveal logic, and browser/runtime integration boundaries.
+This repository helps an AI coding agent stay inside a documented and validated FHEVM implementation path for a concrete confidential application while reducing common mistakes around proofs, ACL, reveal logic, and browser/runtime integration boundaries.

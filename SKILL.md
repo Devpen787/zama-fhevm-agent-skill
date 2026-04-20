@@ -80,6 +80,7 @@ If any of the first four inputs are missing and the ambiguity is material, ask f
 
 5. Define the input proof path.
    - Identify where encrypted user inputs require proofs.
+   - Prefer the current documented `inputProof + FHE.fromExternal(...)` path for user-supplied encrypted inputs.
    - Do not generate submission logic that ignores input proof requirements.
 
 6. Generate the contract skeleton.
@@ -206,7 +207,7 @@ Before finalizing, check:
    - Are decryption and viewing rights explicit and coherent?
 
 3. `proof check`
-   - Are encrypted user inputs handled with the required proof path?
+   - Are encrypted user inputs handled with the required `inputProof + FHE.fromExternal(...)` path?
 
 4. `anti-pattern check`
    - Does the output avoid the known FHEVM pitfalls in `references/common-anti-patterns.md`?

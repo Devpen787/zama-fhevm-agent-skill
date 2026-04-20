@@ -1,17 +1,22 @@
 import {createServer} from "node:http";
 import {readFile, stat} from "node:fs/promises";
-import {createReadStream} from "node:fs";
+import {createReadStream, openSync} from "node:fs";
 import {extname, join, normalize} from "node:path";
 import {fileURLToPath} from "node:url";
-import {execFile} from "node:child_process";
+import {execFile, spawn} from "node:child_process";
 import {promisify} from "node:util";
+import net from "node:net";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const distDir = join(__dirname, "dist");
 const rpcTarget = "http://127.0.0.1:8545";
 const hardhatCwd = "/tmp/zama-validation";
 const port = 4177;
+const hardhatHost = "127.0.0.1";
+const hardhatPort = 8545;
+const hardhatLogPath = "/tmp/zama-live-video-hardhat.log";
 const execFileAsync = promisify(execFile);
+let hardhatStartingPromise = null;
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -72,22 +77,79 @@ async function proxyRpc(req, res) {
     bodyChunks.push(chunk);
   }
 
-  const response = await fetch(rpcTarget, {
-    method: req.method,
-    headers: {
-      "content-type": req.headers["content-type"] ?? "application/json",
-    },
-    body: bodyChunks.length ? Buffer.concat(bodyChunks) : undefined,
-  });
+  try {
+    await ensureHardhatNode();
+    const response = await fetch(rpcTarget, {
+      method: req.method,
+      headers: {
+        "content-type": req.headers["content-type"] ?? "application/json",
+      },
+      body: bodyChunks.length ? Buffer.concat(bodyChunks) : undefined,
+    });
 
-  const bytes = Buffer.from(await response.arrayBuffer());
-  res.writeHead(response.status, {
-    "Content-Type": response.headers.get("content-type") ?? "application/json",
+    const bytes = Buffer.from(await response.arrayBuffer());
+    res.writeHead(response.status, {
+      "Content-Type": response.headers.get("content-type") ?? "application/json",
+    });
+    res.end(bytes);
+  } catch (error) {
+    sendJson(res, 500, {
+      error: error instanceof Error ? error.message : "rpc proxy failed",
+    });
+  }
+}
+
+function isPortOpen(host, portNumber) {
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
+    const finish = (result) => {
+      socket.destroy();
+      resolve(result);
+    };
+
+    socket.setTimeout(500);
+    socket.once("connect", () => finish(true));
+    socket.once("timeout", () => finish(false));
+    socket.once("error", () => finish(false));
+    socket.connect(portNumber, host);
   });
-  res.end(bytes);
+}
+
+async function waitForHardhatReady() {
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    if (await isPortOpen(hardhatHost, hardhatPort)) {
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  throw new Error("Local Hardhat node did not start in time");
+}
+
+async function ensureHardhatNode() {
+  if (await isPortOpen(hardhatHost, hardhatPort)) {
+    return;
+  }
+
+  if (!hardhatStartingPromise) {
+    hardhatStartingPromise = (async () => {
+      const logFd = openSync(hardhatLogPath, "a");
+      const child = spawn("npx", ["hardhat", "node", "--hostname", hardhatHost], {
+        cwd: hardhatCwd,
+        detached: true,
+        stdio: ["ignore", logFd, logFd],
+      });
+      child.unref();
+      await waitForHardhatReady();
+    })().finally(() => {
+      hardhatStartingPromise = null;
+    });
+  }
+
+  await hardhatStartingPromise;
 }
 
 async function runHardhatJson(scriptName, env = {}) {
+  await ensureHardhatNode();
   const {stdout} = await execFileAsync(
     "npx",
     ["hardhat", "run", "--network", "localhost", `scripts/${scriptName}`],
