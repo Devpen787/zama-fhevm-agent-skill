@@ -173,8 +173,6 @@ const overallStatusNode = document.querySelector<HTMLDivElement>("#overall-statu
 const overallStatusTextNode = document.querySelector<HTMLSpanElement>("#overall-status-text");
 const stepListNode = document.querySelector<HTMLOListElement>("#step-list");
 const logBoxNode = document.querySelector<HTMLDivElement>("#log-box");
-const metricContractNode = document.querySelector<HTMLDivElement>("#metric-contract");
-const metricWindowNode = document.querySelector<HTMLDivElement>("#metric-window");
 const metricResultNode = document.querySelector<HTMLDivElement>("#metric-result");
 let runInFlight = false;
 
@@ -257,9 +255,7 @@ function resetUiForRun(): void {
   steps[2].detail = "Waiting to finalize.";
   steps[3].detail = "Waiting to decrypt the tally.";
   logLines.length = 0;
-  metricContractNode && (metricContractNode.textContent = "Not deployed yet");
-  metricWindowNode && (metricWindowNode.textContent = "Waiting for operator-controlled run");
-  metricResultNode && (metricResultNode.textContent = "No result yet");
+  metricResultNode && (metricResultNode.textContent = "Run in progress...");
   renderSteps();
   pushLog("Proof run starting...");
   setOverallStatus("running", "Running: agent target proof in progress");
@@ -312,9 +308,6 @@ async function runLiveFlow(): Promise<void> {
       eligibleVoter: signerAddress,
     });
     const contractAddress = deployment.contractAddress;
-    metricContractNode && (metricContractNode.textContent = contractAddress);
-    metricWindowNode &&
-      (metricWindowNode.textContent = formatTimestampRange(deployment.startTime, deployment.endTime));
     pushLog(`Fresh contract deployed at ${contractAddress}.`);
     updateStep(
       "deploy",
@@ -384,6 +377,7 @@ async function runLiveFlow(): Promise<void> {
   } catch (error) {
     const message = error instanceof Error ? error.message : "unknown error";
     pushLog(`Run failed: ${message}`);
+    metricResultNode && (metricResultNode.textContent = "Run failed. Open the technical log.");
     const runningStep = steps.find((step) => step.state === "running");
     if (runningStep) {
       runningStep.state = "fail";

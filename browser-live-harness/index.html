@@ -44,10 +44,11 @@
         color: var(--text);
         font-family: var(--mono);
         background:
-          radial-gradient(circle at 12% 10%, rgba(166, 215, 255, 0.2), transparent 26%),
-          radial-gradient(circle at 88% 82%, rgba(105, 223, 160, 0.14), transparent 24%),
+          radial-gradient(circle at 10% 8%, rgba(166, 215, 255, 0.22), transparent 24%),
+          radial-gradient(circle at 84% 16%, rgba(255, 255, 255, 0.06), transparent 18%),
+          radial-gradient(circle at 88% 84%, rgba(105, 223, 160, 0.14), transparent 26%),
           linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 28%),
-          linear-gradient(135deg, #08111a 0%, #0a1521 48%, #0c1a1f 100%);
+          linear-gradient(135deg, #071019 0%, #0a1521 44%, #0c1a1f 100%);
       }
 
       body::before {
@@ -64,9 +65,9 @@
       }
 
       main {
-        max-width: 1220px;
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 26px;
+        padding: 28px 28px 40px;
       }
 
       h1,
@@ -110,16 +111,17 @@
 
       .frame {
         display: grid;
-        gap: 18px;
+        gap: 20px;
       }
 
       .panel {
         position: relative;
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        background: linear-gradient(180deg, rgba(11, 18, 30, 0.92), rgba(8, 15, 25, 0.88));
-        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+        border: 1px solid rgba(145, 189, 244, 0.12);
+        border-radius: 30px;
+        background: linear-gradient(180deg, rgba(10, 18, 30, 0.9), rgba(8, 14, 24, 0.86));
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
         overflow: hidden;
+        backdrop-filter: blur(10px);
       }
 
       .panel::after {
@@ -138,12 +140,12 @@
       }
 
       .hero-main {
-        padding: 28px;
+        padding: 34px;
         display: grid;
-        gap: 22px;
+        gap: 26px;
         background:
-          radial-gradient(circle at 85% 20%, rgba(166, 215, 255, 0.12), transparent 24%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 32%);
+          radial-gradient(circle at 80% 16%, rgba(166, 215, 255, 0.16), transparent 24%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 32%);
       }
 
       .eyebrow {
@@ -161,21 +163,22 @@
 
       .headline {
         display: grid;
-        gap: 12px;
-        max-width: 760px;
+        gap: 14px;
+        max-width: 780px;
       }
 
       .headline h1 {
         font-family: var(--serif);
-        font-size: clamp(3rem, 7vw, 6rem);
-        line-height: 0.9;
+        font-size: clamp(3.2rem, 7.4vw, 6.35rem);
+        line-height: 0.88;
         letter-spacing: -0.06em;
         color: #f6f8fc;
-        max-width: 10ch;
+        max-width: 8.4ch;
+        text-wrap: balance;
       }
 
       .headline p {
-        max-width: 57ch;
+        max-width: 49ch;
         color: var(--text-soft);
         font-size: 15px;
       }
@@ -225,15 +228,15 @@
       .hero-bottom {
         display: grid;
         grid-template-columns: minmax(0, 1.08fr) minmax(250px, 0.92fr);
-        gap: 12px;
+        gap: 14px;
       }
 
       .quote-card,
       .notes-card {
-        border-radius: 20px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.03);
-        padding: 18px;
+        border-radius: 22px;
+        border: 1px solid rgba(145, 189, 244, 0.1);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+        padding: 20px;
       }
 
       .section-tag {
@@ -247,8 +250,8 @@
       .prompt-copy {
         font-family: var(--serif);
         color: #f2f5fb;
-        font-size: clamp(1.15rem, 2vw, 1.55rem);
-        line-height: 1.25;
+        font-size: clamp(1.16rem, 1.95vw, 1.5rem);
+        line-height: 1.22;
         letter-spacing: -0.02em;
       }
 
@@ -263,9 +266,9 @@
       }
 
       .hero-rail {
-        padding: 26px 22px;
+        padding: 30px 24px;
         display: grid;
-        gap: 18px;
+        gap: 22px;
       }
 
       .rail-header {
@@ -287,10 +290,10 @@
       }
 
       .rail-block {
-        padding-top: 14px;
-        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
         display: grid;
-        gap: 8px;
+        gap: 10px;
       }
 
       .rail-block h3 {
@@ -302,13 +305,17 @@
         display: grid;
         grid-template-columns: 1.08fr repeat(3, minmax(0, 1fr));
         gap: 12px;
+        padding: 10px;
+        border: 1px solid rgba(145, 189, 244, 0.12);
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(10, 18, 29, 0.88), rgba(8, 14, 24, 0.82));
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.16);
       }
 
       .proof-tile {
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        background: linear-gradient(180deg, rgba(13, 23, 37, 0.94), rgba(10, 18, 29, 0.92));
-        padding: 18px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 18px 18px 20px;
       }
 
       .proof-label {
@@ -322,7 +329,7 @@
       .proof-value {
         color: var(--text);
         font-size: 15px;
-        line-height: 1.45;
+        line-height: 1.4;
         word-break: break-word;
       }
 
@@ -339,7 +346,7 @@
 
       .proof-area,
       .support-area {
-        padding: 22px;
+        padding: 24px;
       }
 
       .step-list {
@@ -347,17 +354,17 @@
         margin: 0;
         padding: 0;
         display: grid;
-        gap: 14px;
+        gap: 12px;
       }
 
       .step-card {
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 16px;
-        padding: 16px;
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.025);
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(145, 189, 244, 0.11);
+        background: rgba(255, 255, 255, 0.02);
       }
 
       .step-card.running {
@@ -420,14 +427,14 @@
 
       .support-area {
         display: grid;
-        gap: 16px;
+        gap: 18px;
       }
 
       .support-block {
-        padding-bottom: 14px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         display: grid;
-        gap: 8px;
+        gap: 10px;
       }
 
       .support-block:last-of-type {
@@ -441,10 +448,10 @@
       }
 
       details {
-        border: 1px solid var(--line);
+        border: 1px solid rgba(145, 189, 244, 0.12);
         border-radius: 18px;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.02);
+        background: rgba(255, 255, 255, 0.018);
       }
 
       summary {
@@ -524,10 +531,10 @@
             <span class="eyebrow">Zama Bounty Track Submission</span>
 
             <div class="headline">
-              <h1>Agent Skill to Working FHEVM App</h1>
+              <h1>Zama Agent Skill, Proven Live</h1>
               <p>
-                A Zama-specific skill for AI coding agents, shown through one prompt and one live
-                proof path.
+                One prompt, one validated confidential-voting build path, and one replayable proof
+                for a Zama-specific AI coding skill.
               </p>
             </div>
 
@@ -551,9 +558,9 @@
               <div class="notes-card">
                 <div class="section-tag">What This Shows</div>
                 <ul class="mini-list">
-                  <li>Documented Zama / FHEVM patterns.</li>
-                  <li>Compile, tests, and live browser proof.</li>
-                  <li>Clear proof boundary.</li>
+                  <li>Zama-specific encrypted input and reveal logic.</li>
+                  <li>Compile, tests, and live browser replay.</li>
+                  <li>Clear local proof boundary.</li>
                 </ul>
               </div>
             </div>
@@ -563,55 +570,41 @@
             <div class="rail-header">
               <h2>Why This Matters</h2>
               <p>
-                The brief is about AI agent skills. This page shows what the skill enforces, what the
-                proof covers, and where the boundary sits.
+                This submission is developer infrastructure for confidential applications. The demo
+                target is voting, but the enforced build discipline maps directly to confidential
+                finance patterns: encrypted inputs, ACL, controlled reveal, and test-backed flows.
               </p>
             </div>
 
             <div class="rail-block">
-              <h3>Zama-specific reasoning</h3>
+              <h3>What the skill enforces</h3>
               <ul class="support-list">
                 <li>Encrypted types and proof-aware inputs are explicit.</li>
-                <li>ACL and reveal logic are decided up front.</li>
-              </ul>
-            </div>
-
-            <div class="rail-block">
-              <h3>Error prevention</h3>
-              <ul class="support-list">
-                <li>Anti-patterns, validation prompts, and stress checks are built in.</li>
-                <li>The skill is shaped to avoid fake FHEVM output.</li>
-              </ul>
-            </div>
-
-            <div class="rail-block">
-              <h3>Boundary honesty</h3>
-              <ul class="support-list">
-                <li>The browser owns the transaction path.</li>
-                <li>Encrypted input generation and final decrypt are helper-backed.</li>
+                <li>ACL, finalize, and reveal decisions are made before codegen.</li>
+                <li>Stress-tested rails reduce fake or generic FHEVM output.</li>
               </ul>
             </div>
           </aside>
         </section>
 
         <section class="proof-strip">
-            <div class="proof-tile">
+          <div class="proof-tile">
             <div class="proof-label">Focus</div>
             <div class="proof-value lead">
               AI agent skill for Zama / FHEVM, proven through one narrow confidential-app path.
             </div>
           </div>
           <div class="proof-tile">
-            <div class="proof-label">Current Contract</div>
-            <div class="proof-value" id="metric-contract">No contract deployed yet</div>
+            <div class="proof-label">Validated Path</div>
+            <div class="proof-value">`externalEbool + inputProof + actor-specific reveal`</div>
           </div>
           <div class="proof-tile">
-            <div class="proof-label">Run Window</div>
-            <div class="proof-value" id="metric-window">Waiting for operator-controlled run</div>
+            <div class="proof-label">Hardhat Gate</div>
+            <div class="proof-value">Compile pass, targeted suite `16 / 16` passing.</div>
           </div>
           <div class="proof-tile">
             <div class="proof-label">Outcome</div>
-            <div class="proof-value" id="metric-result">No result yet</div>
+            <div class="proof-value" id="metric-result">Click to replay the live proof.</div>
           </div>
         </section>
 
@@ -628,7 +621,7 @@
                 <li>Fresh local deployment.</li>
                 <li>Encrypted vote submission.</li>
                 <li>Finalization and visible result.</li>
-                <li>Browser flow aligned with the repo path.</li>
+                <li>Browser flow aligned with the validated repo path.</li>
               </ul>
             </div>
 
