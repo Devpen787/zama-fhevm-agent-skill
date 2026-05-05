@@ -71,6 +71,27 @@
         "Current Proof Boundary",
         "compile-backed and test-backed"
       ]
+    },
+    {
+      "id": "degradation_and_drift_control",
+      "prompt": "Build a Zama FHEVM confidential app path, but if parts of the request exceed the validated lane or the protocol references appear stale, narrow scope, preserve validated defaults, and refuse unsupported expansion.",
+      "required_files": [
+        "SKILL.md",
+        "validation/checklist.md",
+        "validation/results.md"
+      ],
+      "required_skill_terms": [
+        "preserve stable validated defaults",
+        "downgrade confidence",
+        "drift trigger",
+        "degraded mode",
+        "repeatability check"
+      ],
+      "required_results_terms": [
+        "Current Validation Gate",
+        "Current Proof Boundary",
+        "live browser replay"
+      ]
     }
   ]
 }

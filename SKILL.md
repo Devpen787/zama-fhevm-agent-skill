@@ -113,9 +113,44 @@ If any of the first four inputs are missing and the ambiguity is material, ask f
    - Review against `references/common-anti-patterns.md`.
    - Remove unsupported API usage, broken visibility assumptions, or plaintext shortcuts.
 
-10. Return only the requested deliverables plus unresolved risks.
+10. Prefer stable validated defaults over novelty.
+   - If the request matches the confidential-voting validation target or a close variant, preserve the validated contract, test, and frontend path unless the prompt explicitly requires a justified change.
+   - Do not broaden architecture or swap reveal models only because another design is possible.
 
-11. When the request matches the confidential-voting validation target, treat the repo templates as proof-bearing defaults, not just inspiration.
+11. Degrade safely when confidence drops.
+   - If the request becomes broader, less specific, or less well-supported than the validated lane, narrow scope before generating more code.
+   - Preferred downgrade order:
+     - contract + tests only
+     - contract only
+     - explicit refusal to continue without clarified requirements
+
+12. Respond explicitly to drift or reference uncertainty.
+   - If repo references, upstream docs, or requested behavior conflict, downgrade confidence and stop at the narrowest safe deliverable.
+   - Do not smooth over version uncertainty with plausible-looking code.
+
+13. Return only the requested deliverables plus unresolved risks.
+
+14. When the request matches the confidential-voting validation target, treat the repo templates as proof-bearing defaults, not just inspiration.
+
+## Stability Rules
+
+Apply these rules across repeated runs and different host environments:
+
+1. `preserve stable validated defaults`
+   - when the validated path already satisfies the request, reuse it instead of regenerating a broader variant
+
+2. `downgrade confidence before broadening scope`
+   - when the request exceeds the validated lane, narrow the output before adding new moving parts
+
+3. `prefer explicit degraded mode`
+   - if the model cannot confidently complete contract + tests + frontend, fall back to the narrowest safe artifact set and say so
+
+4. `hold the reveal model stable`
+   - do not drift from actor-specific reveal to public reveal without an explicit prompt requirement and a stated reason
+
+5. `treat drift as blocking`
+   - a drift trigger is any material uncertainty about Zama/FHEVM APIs, relayer behavior, input-proof handling, or ACL semantics
+   - under a drift trigger, do not imply fresh validation
 
 ## Output Contract
 
@@ -207,6 +242,21 @@ If compile, deploy, or runtime correctness cannot be confirmed:
 - say so directly
 - do not imply production readiness
 
+### Drift or reference conflict
+
+If repo references, templates, or upstream expectations appear inconsistent:
+
+- treat that as a drift trigger
+- downgrade confidence
+- return the narrowest safe deliverable or refuse the unsupported portion
+
+### Repeated-run divergence
+
+If a repeated run suggests a broader, more novel, or different architecture than the validated lane:
+
+- prefer the stable validated default
+- do not treat novelty as improvement by itself
+
 ## Verification
 
 Before finalizing, check:
@@ -231,6 +281,15 @@ Before finalizing, check:
 
 7. `validated-path check`
    - If the request matches the confidential-voting core target, did the output stay aligned with the compile-backed and test-backed path?
+
+8. `degraded-mode check`
+   - If confidence dropped, did the answer narrow scope or refuse unsupported expansion instead of improvising?
+
+9. `drift check`
+   - If there was material uncertainty about versions, docs, or references, was confidence downgraded explicitly?
+
+10. `repeatability check`
+   - For requests close to the validated lane, did the answer preserve validated defaults instead of inventing a new architecture?
 
 If any check fails, revise before returning.
 
