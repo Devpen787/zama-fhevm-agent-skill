@@ -4,7 +4,22 @@ This repository is a submission for Zama's `Bounty Track` challenge:
 
 - `Create FHEVM Skills for AI Coding Agents`
 
-The submission is a Zama-specific build system for AI coding agents. It keeps agents inside a documented, validated FHEVM path for one concrete confidential application target.
+This repository gives an AI coding agent a Zama-specific build path for one validated confidential application target. It is designed to keep the agent inside documented FHEVM patterns for encrypted inputs, access control, reveal logic, testing, and replayable proof.
+
+## What This Proves
+
+- a Zama/FHEVM skill can constrain an agent to a real implementation path instead of generic Solidity output
+- the confidential-voting target compiles and passes in the official `zama-ai/fhevm-hardhat-template`
+- the browser replay proves the validated `submit -> finalize -> decrypt` path on a fresh local deployment
+
+## Reviewer Path
+
+1. read `SUBMISSION_OVERVIEW.md`
+2. read `SKILL.md`
+3. inspect `examples/confidential-voting-contract.sol`
+4. inspect `examples/confidential-voting.test.ts`
+5. inspect `validation/results.md`
+6. inspect `LIVE_REPLAY.md`
 
 ## What It Does
 
@@ -86,15 +101,6 @@ This submission makes one explicit boundary clear:
 - the browser owns the transaction path
 - encrypted input generation and final tally decrypt are helper-backed in the live local demo
 - this is not claiming Sepolia proof or a public relayer-backed browser run
-
-## Fastest Reviewer Path
-
-1. read `SUBMISSION_OVERVIEW.md`
-2. read `SKILL.md`
-3. inspect `examples/confidential-voting-contract.sol`
-4. inspect `examples/confidential-voting.test.ts`
-5. inspect `validation/results.md`
-6. inspect `LIVE_REPLAY.md`
 
 ## Replay
 
