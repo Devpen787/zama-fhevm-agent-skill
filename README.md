@@ -16,10 +16,12 @@ This repository gives an AI coding agent a Zama-specific build path for one vali
 
 1. read `SUBMISSION_OVERVIEW.md`
 2. read `SKILL.md`
-3. inspect `examples/confidential-voting-contract.sol`
-4. inspect `examples/confidential-voting.test.ts`
-5. inspect `validation/results.md`
-6. inspect `LIVE_REPLAY.md`
+3. read `RELIABILITY_CONTRACT.md`
+4. read `FAILURE_MODES.md`
+5. inspect `examples/confidential-voting-contract.sol`
+6. inspect `examples/confidential-voting.test.ts`
+7. inspect `validation/results.md`
+8. inspect `LIVE_REPLAY.md`
 
 ## What It Does
 
@@ -65,6 +67,14 @@ The validated demo target is confidential voting because it is the smallest proo
   - confidential-voting validation target and inspectable artifacts
 - `validation/`
   - results log and run artifacts
+- `RELIABILITY_CONTRACT.md`
+  - guarantees, refusals, and degraded-mode rules
+- `DRIFT_AND_UPDATE_POLICY.md`
+  - what must be rerun when Zama tooling changes
+- `FAILURE_MODES.md`
+  - explicit failure classes for privacy-sensitive agent generation
+- `CONSISTENCY_AND_CANARY_PLAN.md`
+  - repeatability and degradation checks beyond one passing run
 - `SUBMISSION_OVERVIEW.md`
   - concise reviewer brief
 - `LIVE_REPLAY.md`
@@ -101,6 +111,17 @@ This submission makes one explicit boundary clear:
 - the browser owns the transaction path
 - encrypted input generation and final tally decrypt are helper-backed in the live local demo
 - this is not claiming Sepolia proof or a public relayer-backed browser run
+
+## Reliability Layer
+
+For privacy-sensitive and finance-adjacent use cases, the repository also makes four additional commitments explicit:
+
+- `RELIABILITY_CONTRACT.md`
+- `DRIFT_AND_UPDATE_POLICY.md`
+- `FAILURE_MODES.md`
+- `CONSISTENCY_AND_CANARY_PLAN.md`
+
+These documents define what the skill guarantees, how it should degrade, what counts as drift, and how repeatability should be checked before stronger claims are made.
 
 ## Replay
 

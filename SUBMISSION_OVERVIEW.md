@@ -39,6 +39,13 @@ The repository combines:
 - `validation/`
   - results and run artifacts
 
+It also adds an explicit reliability layer for privacy-sensitive generation:
+
+- `RELIABILITY_CONTRACT.md`
+- `DRIFT_AND_UPDATE_POLICY.md`
+- `FAILURE_MODES.md`
+- `CONSISTENCY_AND_CANARY_PLAN.md`
+
 ## Validated Core
 
 The validated core path is:
@@ -78,10 +85,12 @@ It is the smallest validated proof target, not the full limit of the repositoryâ
 
 1. `README.md`
 2. `SKILL.md`
-3. `examples/confidential-voting-contract.sol`
-4. `examples/confidential-voting.test.ts`
-5. `validation/results.md`
-6. `LIVE_REPLAY.md`
+3. `RELIABILITY_CONTRACT.md`
+4. `FAILURE_MODES.md`
+5. `examples/confidential-voting-contract.sol`
+6. `examples/confidential-voting.test.ts`
+7. `validation/results.md`
+8. `LIVE_REPLAY.md`
 
 ## What Is Proven vs Not Proven
 
@@ -91,6 +100,7 @@ Proven:
 - the narrow contract/test target compiles and passes
 - the repository encodes a real validation loop
 - the browser proves a live wallet-connected hybrid path on a fresh local deployment
+- the repository defines explicit degrade, drift, and canary rules for a privacy-sensitive agent lane
 
 Not yet proven:
 
