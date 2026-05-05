@@ -25,9 +25,9 @@
         "validated actor-specific reveal path"
       ],
       "required_results_terms": [
-        "## Run 3",
-        "Status:",
-        "- pass"
+        "Core contract/test validation",
+        "validation/run3_core_demo_output.md",
+        "contract and test path"
       ]
     },
     {
@@ -38,7 +38,6 @@
         "references/frontend-integration.md",
         "references/decryption-patterns.md",
         "examples/confidential-voting-frontend.ts",
-        "validation/run7_browser_harness_output.md",
         "validation/run8_live_browser_hybrid_output.md"
       ],
       "required_skill_terms": [
@@ -47,9 +46,9 @@
         "do not imply production readiness"
       ],
       "required_results_terms": [
-        "Run 7",
-        "Run 8",
-        "browser"
+        "Live browser replay",
+        "validation/run8_live_browser_hybrid_output.md",
+        "live browser replay"
       ]
     },
     {
@@ -58,8 +57,8 @@
       "required_files": [
         "SKILL.md",
         "references/common-anti-patterns.md",
-        "validation/run5_deeper_stress_output.md",
-        "validation/run6_security_hardening_output.md"
+        "validation/results.md",
+        "validation/checklist.md"
       ],
       "required_skill_terms": [
         "anti-pattern check",
@@ -68,9 +67,9 @@
         "claim deployment is safe"
       ],
       "required_results_terms": [
-        "Run 5",
-        "Run 6",
-        "pass"
+        "Current Validation Gate",
+        "Current Proof Boundary",
+        "compile-backed and test-backed"
       ]
     }
   ]

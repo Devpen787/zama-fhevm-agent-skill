@@ -1,6 +1,17 @@
+---
+name: zama-fhevm-confidential-app-build
+description: Use when an AI coding agent is asked to build, test, deploy, or integrate a confidential smart contract or minimal confidential application flow using the Zama Protocol and FHEVM, especially in IDEs or agents such as Cursor, Claude Code, Windsurf, or Codex where repo references, templates, and validation paths can be followed directly.
+---
+
 # Zama FHEVM Confidential App Build Skill
 
 Use when the user asks to build, test, deploy, or integrate a confidential smart contract using the Zama Protocol and FHEVM.
+
+Portability rule:
+
+- if the host IDE or agent does not support automatic skill activation, treat this file as the explicit operating contract
+- read the referenced `references/` and `templates/` files directly from the repo
+- do not assume vendor-specific tool wiring or hidden platform metadata
 
 Do not use for:
 
