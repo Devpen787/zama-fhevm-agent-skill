@@ -18,10 +18,11 @@ This repository gives an AI coding agent a Zama-specific build path for one vali
 2. read `SKILL.md`
 3. read `RELIABILITY_CONTRACT.md`
 4. read `FAILURE_MODES.md`
-5. inspect `examples/confidential-voting-contract.sol`
-6. inspect `examples/confidential-voting.test.ts`
-7. inspect `validation/results.md`
-8. inspect `LIVE_REPLAY.md`
+5. read `LANE_POLICY.md`
+6. inspect `examples/confidential-voting-contract.sol`
+7. inspect `examples/confidential-voting.test.ts`
+8. inspect `validation/results.md`
+9. inspect `LIVE_REPLAY.md`
 
 ## What It Does
 
@@ -75,6 +76,8 @@ The validated demo target is confidential voting because it is the smallest proo
   - explicit failure classes for privacy-sensitive agent generation
 - `CONSISTENCY_AND_CANARY_PLAN.md`
   - repeatability and degradation checks beyond one passing run
+- `LANE_POLICY.md`
+  - which environments may generate, preserve, review, or are disallowed
 - `SUBMISSION_OVERVIEW.md`
   - concise reviewer brief
 - `LIVE_REPLAY.md`
@@ -120,6 +123,7 @@ For privacy-sensitive and finance-adjacent use cases, the repository also makes 
 - `DRIFT_AND_UPDATE_POLICY.md`
 - `FAILURE_MODES.md`
 - `CONSISTENCY_AND_CANARY_PLAN.md`
+- `LANE_POLICY.md`
 
 These documents define what the skill guarantees, how it should degrade, what counts as drift, and how repeatability should be checked before stronger claims are made.
 

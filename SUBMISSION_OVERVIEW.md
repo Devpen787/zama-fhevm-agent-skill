@@ -45,6 +45,7 @@ It also adds an explicit reliability layer for privacy-sensitive generation:
 - `DRIFT_AND_UPDATE_POLICY.md`
 - `FAILURE_MODES.md`
 - `CONSISTENCY_AND_CANARY_PLAN.md`
+- `LANE_POLICY.md`
 
 ## Validated Core
 
@@ -87,10 +88,11 @@ It is the smallest validated proof target, not the full limit of the repositoryâ
 2. `SKILL.md`
 3. `RELIABILITY_CONTRACT.md`
 4. `FAILURE_MODES.md`
-5. `examples/confidential-voting-contract.sol`
-6. `examples/confidential-voting.test.ts`
-7. `validation/results.md`
-8. `LIVE_REPLAY.md`
+5. `LANE_POLICY.md`
+6. `examples/confidential-voting-contract.sol`
+7. `examples/confidential-voting.test.ts`
+8. `validation/results.md`
+9. `LIVE_REPLAY.md`
 
 ## What Is Proven vs Not Proven
 
@@ -101,6 +103,7 @@ Proven:
 - the repository encodes a real validation loop
 - the browser proves a live wallet-connected hybrid path on a fresh local deployment
 - the repository defines explicit degrade, drift, and canary rules for a privacy-sensitive agent lane
+- the repository explicitly separates generation, preserve, review, and disallowed execution lanes
 
 Not yet proven:
 
