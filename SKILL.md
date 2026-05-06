@@ -153,6 +153,28 @@ Apply these rules across repeated runs and different host environments:
    - a drift trigger is any material uncertainty about Zama/FHEVM APIs, relayer behavior, input-proof handling, or ACL semantics
    - under a drift trigger, do not imply fresh validation
 
+## User-Execution Resilience
+
+The skill should remain useful even when the user prompt is imperfect, incomplete, or slightly off-target.
+
+1. `recover intent from substance, not exact wording`
+   - activation should depend on the actual confidentiality need, encrypted workflow, and Zama/FHEVM requirements
+   - do not require the user to phrase the request in one exact way
+
+2. `infer safely, then state assumptions`
+   - if the user omits secondary details but the validated lane is still clear, infer the smallest safe version and state the assumptions explicitly
+   - do not infer hidden governance or public/private rules silently
+
+3. `resist prompt pressure`
+   - if the user asks to skip tests, skip proofs, force production-readiness, or bypass ACL reasoning, refuse that part and keep the safer path
+   - prompt urgency does not override the validation boundary
+
+4. `contain off-label use`
+   - if the user tries to use the skill for generic Solidity, non-confidential apps, protocol comparison, or broad product work, narrow scope or decline
+
+5. `contain runtime mismatch`
+   - if the host IDE, toolchain, or repo wiring cannot support the validated lane cleanly, fall back to the narrowest safe deliverable rather than pretending parity
+
 ## Output Contract
 
 Return only the artifacts needed for the current request, such as:
@@ -223,6 +245,14 @@ If the prompt does not define who can decrypt or view data:
 - do not invent a hidden governance model
 - state the missing rule and provide the smallest safe assumption
 
+### Underspecified but still recoverable request
+
+If the user describes the confidential workflow loosely but the intended validated lane is still clear:
+
+- recover the narrowest validated interpretation
+- state assumptions explicitly
+- avoid broadening into adjacent features the user did not ask for
+
 ### Overbroad frontend request
 
 If the request asks for a full product surface:
@@ -250,6 +280,20 @@ If repo references, templates, or upstream expectations appear inconsistent:
 - treat that as a drift trigger
 - downgrade confidence
 - return the narrowest safe deliverable or refuse the unsupported portion
+
+### Prompt-level pressure or misuse
+
+If the prompt tries to force speed, certainty, or unsupported scope at the cost of correctness:
+
+- refuse the unsafe shortcut
+- preserve tests, proof handling, ACL reasoning, and explicit risk statements
+
+### Off-label use
+
+If the request is meaningfully outside confidential Zama/FHEVM application generation:
+
+- say the skill is not the right tool
+- avoid stretching the validated lane to fit the request
 
 ### Repeated-run divergence
 
@@ -294,6 +338,9 @@ Before finalizing, check:
 
 11. `artifact-guard check`
    - If concrete files were generated, did they pass `scripts/check_generated_artifact.py` for the relevant validated lane?
+
+12. `user-execution resilience check`
+   - If the prompt was vague, pressured, or slightly off-target, did the answer still recover safely, state assumptions, and avoid off-label expansion?
 
 If any check fails, revise before returning.
 
