@@ -8,3 +8,5 @@ yarn-error.log*
 .idea/
 .vscode/
 .ops/
+evals/adversarial_*_run.json
+evals/adversarial_last_run.json
