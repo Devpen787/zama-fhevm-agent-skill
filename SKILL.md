@@ -131,6 +131,7 @@ If any of the first four inputs are missing and the ambiguity is material, ask f
 13. Return only the requested deliverables plus unresolved risks.
 
 14. When the request matches the confidential-voting validation target, treat the repo templates as proof-bearing defaults, not just inspiration.
+    - When concrete files are produced, run `scripts/check_generated_artifact.py` against the generated contract, test, and frontend files whenever the environment allows it.
 
 ## Stability Rules
 
@@ -290,6 +291,9 @@ Before finalizing, check:
 
 10. `repeatability check`
    - For requests close to the validated lane, did the answer preserve validated defaults instead of inventing a new architecture?
+
+11. `artifact-guard check`
+   - If concrete files were generated, did they pass `scripts/check_generated_artifact.py` for the relevant validated lane?
 
 If any check fails, revise before returning.
 
