@@ -1,5 +1,5 @@
 {
-  "name": "zama-fhevm-agent-skill-browser-live-harness",
+  "name": "fhevm-agent-skill-browser-live-harness",
   "private": true,
   "version": "0.0.1",
   "type": "module",
