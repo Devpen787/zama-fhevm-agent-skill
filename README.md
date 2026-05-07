@@ -1,4 +1,4 @@
-# Zama FHEVM Agent Skill
+# FHEVM Agent Skill
 
 This repository is a submission for Zama's `Bounty Track` challenge:
 
