@@ -28,18 +28,7 @@ This repository gives an AI coding agent a Zama-specific build path for one vali
 
 ## What It Does
 
-Given a compact prompt such as:
-
-- `Build a confidential voting contract using Zama FHEVM with encrypted vote values, tests, and a minimal frontend flow`
-
-the repository helps an agent:
-
-- use Zama/FHEVM primitives instead of generic Solidity habits
-- reason explicitly about encrypted inputs, ACL, proofs, and reveal rights
-- avoid common anti-patterns
-- land on a path that can be reviewed, replayed, compiled, and tested
-
-For evaluation, use the stricter prompt:
+Copy this prompt into a new coding-agent chat from the repository root:
 
 ```text
 Read SKILL.md and use the local references, templates, and examples in this repository.
@@ -58,6 +47,15 @@ Then include:
 
 Keep the output narrow, Zama-specific, and aligned with the validated path in the repo.
 ```
+
+With that prompt, the repository helps an agent:
+
+- use Zama/FHEVM primitives instead of generic Solidity habits
+- reason explicitly about encrypted inputs, ACL, proofs, and reveal rights
+- avoid common anti-patterns
+- land on a path that can be reviewed, replayed, compiled, and tested
+
+Short prompts such as `Build a confidential voting contract using Zama FHEVM with encrypted vote values, tests, and a minimal frontend flow` are supported as intent signals, but they are not the recommended evaluator prompt because they do not force the agent to read the local skill and return concrete artifacts.
 
 ## Strategic Fit
 
