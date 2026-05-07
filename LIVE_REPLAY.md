@@ -53,9 +53,23 @@ Then click:
 
 Expected browser result:
 
-- `live-submit`: `PASS`
-- `live-finalize`: `PASS`
-- `live-decrypt`: `PASS`
+- the deployment step shows a fresh contract address
+- the encrypted vote step shows a submitted transaction hash
+- the finalize step shows `finalized=true`
+- the decrypt step shows `Final decrypted yes-vote tally: 1`
+
+## Hosting Boundary
+
+This replay is local by design.
+
+Do not publish the current harness to Vercel as if it were the proof surface. The browser UI depends on the local Hardhat node and helper-backed endpoints started by `./scripts/prepare_live_video_demo.sh`. Vercel could host a static copy of the UI, but it would not reproduce the live proof unless a matching backend, network, relayer/KMS/ACL configuration, and decrypt boundary were also deployed.
+
+For this submission, the reviewer path is:
+
+1. clone or open the repository
+2. run `./scripts/prepare_live_video_demo.sh`
+3. open `http://127.0.0.1:4177/`
+4. click `Run End-to-End Proof`
 
 ## Logs
 

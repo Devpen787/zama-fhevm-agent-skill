@@ -115,6 +115,19 @@ Not yet proven:
 - Sepolia deployment
 - generalized correctness for every confidential-finance use case
 
+Reviewer replay path:
+
+- run `./scripts/prepare_live_video_demo.sh`
+- open `http://127.0.0.1:4177/`
+- click `Run End-to-End Proof`
+- expect a fresh deployment, encrypted vote transaction, finalization, and `Final decrypted yes-vote tally: 1`
+
+Hosting note:
+
+- the current proof is local, not Vercel-hosted
+- publishing the static UI alone would not reproduce the proof because the replay depends on the local Hardhat node and helper endpoints
+- a hosted proof should be treated as a separate deployment claim with backend, relayer/KMS/ACL, network, and decrypt-boundary configuration
+
 ## Evaluation Claim
 
 This repository helps an AI coding agent stay inside a documented and validated FHEVM implementation path for a concrete confidential application while reducing common mistakes around proofs, ACL, reveal logic, and browser/runtime integration boundaries.

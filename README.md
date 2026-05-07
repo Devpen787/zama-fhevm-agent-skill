@@ -154,7 +154,7 @@ These documents define what the skill guarantees, how it should degrade, what co
 
 ## Replay
 
-To replay the current proof:
+To replay the current proof locally:
 
 ```bash
 ./scripts/prepare_live_video_demo.sh
@@ -166,7 +166,16 @@ Then open:
 http://127.0.0.1:4177/
 ```
 
-and run the end-to-end proof in the browser.
+Click `Run End-to-End Proof`.
+
+Expected result:
+
+- fresh confidential-voting deployment
+- encrypted vote submission
+- finalized encrypted tally
+- final decrypted yes-vote tally: `1`
+
+This replay is intentionally local. Do not treat the static browser harness as a Vercel-ready production deployment: it depends on a local Hardhat node and helper-backed encrypt/decrypt endpoints started by `prepare_live_video_demo.sh`. A hosted version would need a hosted backend, configured relayer/KMS/ACL addresses, and a separate network claim.
 
 ## Validation Commands
 
