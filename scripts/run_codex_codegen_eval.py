@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 
-REPO_ROOT = Path("/Users/devinsonpena/Documents/zama-fhevm-agent-skill")
+REPO_ROOT = Path(__file__).resolve().parents[1]
 ARTIFACT_GUARD = REPO_ROOT / "scripts" / "check_generated_artifact.py"
 SCRATCH_TEMPLATE = Path("/tmp/zama-validation")
 
@@ -58,7 +58,7 @@ def run_codex(prompt: str) -> tuple[bool, str]:
 
 def build_prompt(*, user_prompt: str, with_skill: bool) -> str:
     prefix = (
-        "Read /Users/devinsonpena/Documents/zama-fhevm-agent-skill/SKILL.md and use the local references, templates, and examples in that repository.\n\n"
+        f"Read {REPO_ROOT / 'SKILL.md'} and use the local references, templates, and examples in that repository.\n\n"
         if with_skill
         else ""
     )

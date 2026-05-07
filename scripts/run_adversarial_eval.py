@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 
-REPO_ROOT = Path("/Users/devinsonpena/Documents/zama-fhevm-agent-skill")
+REPO_ROOT = Path(__file__).resolve().parents[1]
 OLLAMA_ENDPOINT = "http://127.0.0.1:11434/api/generate"
 
 

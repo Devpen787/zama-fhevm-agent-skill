@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any
 
 
-REPO_ROOT = Path("/Users/devinsonpena/Documents/zama-fhevm-agent-skill")
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def parse_args() -> argparse.Namespace:
@@ -55,7 +55,7 @@ def run_codex(prompt: str) -> tuple[bool, str]:
 
 def build_prompt(*, user_prompt: str, with_skill: bool) -> str:
     prefix = (
-        "Read /Users/devinsonpena/Documents/zama-fhevm-agent-skill/SKILL.md and use it as the active operating contract.\n\n"
+        f"Read {REPO_ROOT / 'SKILL.md'} and use it as the active operating contract.\n\n"
         if with_skill
         else ""
     )
