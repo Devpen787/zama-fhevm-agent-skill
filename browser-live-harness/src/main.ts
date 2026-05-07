@@ -186,8 +186,8 @@ const steps: StepView[] = [
   },
   {
     id: "submit",
-    label: "2. Encrypted vote from the browser path",
-    help: "Submits one encrypted yes vote through the browser-owned transaction flow.",
+    label: "2. Encrypted vote submission",
+    help: "Creates an encrypted yes vote and submits it through the browser transaction path.",
     state: "pending",
     detail: "Waiting to submit a vote.",
   },
@@ -201,7 +201,7 @@ const steps: StepView[] = [
   {
     id: "decrypt",
     label: "4. Decrypted tally display",
-    help: "Shows the final yes-vote tally through the explicit helper-backed decrypt boundary.",
+    help: "Displays the final yes-vote tally through the documented local decrypt boundary.",
     state: "pending",
     detail: "Waiting to decrypt the tally.",
   },
@@ -270,7 +270,14 @@ function updateStep(id: string, state: StepState, detail: string): void {
 }
 
 function formatTimestampRange(startTime: number, endTime: number): string {
-  return `${startTime} → ${endTime}`;
+  const formatTime = (timestamp: number) =>
+    new Intl.DateTimeFormat("en", {
+      dateStyle: "medium",
+      timeStyle: "medium",
+      timeZoneName: "short",
+    }).format(new Date(timestamp * 1000));
+
+  return `${formatTime(startTime)} -> ${formatTime(endTime)}`;
 }
 
 function formatRunError(error: unknown): string {
@@ -331,7 +338,7 @@ async function runLiveFlow(): Promise<void> {
     assertAllowedContract([contractAddress], contractAddress);
     const contract = new Contract(contractAddress, abi, signer);
 
-    updateStep("submit", "running", "Creating encrypted vote payload and submitting through the browser wallet path...");
+    updateStep("submit", "running", "Creating encrypted vote payload and submitting through the browser transaction path...");
     const encryptedVote = await postJson<{
       handle: string;
       inputProofHex: string;
@@ -368,7 +375,7 @@ async function runLiveFlow(): Promise<void> {
       `Voting closed and finalized successfully. finalized=${String(finalized)}.`,
     );
 
-    updateStep("decrypt", "running", "Requesting the final yes-vote tally through the helper-backed decrypt path...");
+    updateStep("decrypt", "running", "Requesting the final yes-vote tally through the documented local decrypt path...");
     const decrypted = await postJson<{
       getter: string;
       signer: string;
