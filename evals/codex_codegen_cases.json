@@ -1,0 +1,17 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "core_confidential_voting_with_skill",
+      "mode": "with_skill",
+      "repeat": 3,
+      "user_prompt": "Build a confidential voting contract using Zama FHEVM with encrypted vote values, clear access control, tests, and a minimal frontend flow for submitting a vote and revealing results at the end of the voting period."
+    },
+    {
+      "id": "core_confidential_voting_without_skill",
+      "mode": "without_skill",
+      "repeat": 2,
+      "user_prompt": "Build a confidential voting contract using Zama FHEVM with encrypted vote values, clear access control, tests, and a minimal frontend flow for submitting a vote and revealing results at the end of the voting period."
+    }
+  ]
+}

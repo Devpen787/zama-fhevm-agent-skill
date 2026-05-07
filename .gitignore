@@ -10,3 +10,4 @@ yarn-error.log*
 .ops/
 evals/adversarial_*_run.json
 evals/adversarial_last_run.json
+evals/codex_*_run.json

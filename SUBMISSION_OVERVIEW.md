@@ -57,6 +57,7 @@ The validated core path is:
 
 Validation evidence:
 
+- strong-lane `with_skill` versus `without_skill` comparison shows better repeatability on the validated target
 - compile-backed in the official `zama-ai/fhevm-hardhat-template`
 - stress-extended Hardhat test suite passes
 - live browser hybrid harness proves the `submit -> finalize -> decrypt` path on a fresh local deployment
@@ -66,6 +67,7 @@ See:
 - `validation/results.md`
 - `validation/run3_core_demo_output.md`
 - `validation/run8_live_browser_hybrid_output.md`
+- `validation/run9_codex_strong_lane_output.md`
 - `LIVE_REPLAY.md`
 
 ## Why Confidential Voting

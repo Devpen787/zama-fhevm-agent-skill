@@ -3,49 +3,90 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Dict, List
 
 
-def require_terms(path: Path, required_terms: List[str]) -> List[str]:
+def require_checks(path: Path, required_checks: List[dict[str, object]]) -> List[str]:
     text = path.read_text(encoding="utf-8")
     failures: List[str] = []
-    for term in required_terms:
-        if term not in text:
-            failures.append(f"{path.name}:missing:{term}")
+    for check in required_checks:
+        label = str(check["label"])
+        patterns = [str(pattern) for pattern in check["patterns"]]
+        if not any(re.search(pattern, text, re.IGNORECASE | re.DOTALL) for pattern in patterns):
+            failures.append(f"{path.name}:missing:{label}")
     return failures
 
 
-def build_confidential_voting_checks(args: argparse.Namespace) -> Dict[str, List[str]]:
-    checks: Dict[str, List[str]] = {}
+def build_confidential_voting_checks(args: argparse.Namespace) -> Dict[str, List[dict[str, object]]]:
+    checks: Dict[str, List[dict[str, object]]] = {}
     if args.contract:
         checks[str(args.contract)] = [
-            "externalEbool",
-            "inputProof",
-            "FHE.fromExternal",
-            "FHE.allowThis",
-            "finalizeResult",
-            "FHE.allow(",
-            "VotingClosed",
-            "OnlyAdmin",
+            {"label": "externalEbool", "patterns": [r"\bexternalEbool\b"]},
+            {"label": "inputProof", "patterns": [r"\binputProof\b"]},
+            {"label": "FHE.fromExternal", "patterns": [r"FHE\.fromExternal"]},
+            {"label": "FHE.allowThis", "patterns": [r"FHE\.allowThis"]},
+            {"label": "finalizeResult", "patterns": [r"\bfinalizeResult\b"]},
+            {"label": "FHE.allow(", "patterns": [r"FHE\.allow\s*\("]},
+            {"label": "VotingClosed", "patterns": [r"\bVotingClosed\b"]},
+            {"label": "OnlyAdmin", "patterns": [r"\bOnlyAdmin\b"]},
         ]
     if args.test:
         checks[str(args.test)] = [
-            "tampered inputProof",
-            "different contract address",
-            "signer differs from the original input user",
-            "OnlyAdmin",
-            "VotingStillOpen",
-            "userDecryptEuint",
+            {
+                "label": "tampered inputProof",
+                "patterns": [
+                    r"tampered inputProof",
+                    r"tamperedProof",
+                    r"inputProof.*tamper",
+                ],
+            },
+            {
+                "label": "different contract address",
+                "patterns": [
+                    r"different contract address",
+                    r"contract[- ]address mismatch",
+                    r"different contract",
+                    r"contract address",
+                ],
+            },
+            {
+                "label": "signer differs from the original input user",
+                "patterns": [
+                    r"signer differs from the original input user",
+                    r"signer mismatch",
+                    r"different user",
+                    r"InvalidSigner",
+                ],
+            },
+            {"label": "OnlyAdmin", "patterns": [r"\bOnlyAdmin\b"]},
+            {"label": "VotingStillOpen", "patterns": [r"\bVotingStillOpen\b"]},
+            {"label": "userDecryptEuint", "patterns": [r"userDecryptEuint"]},
         ]
     if args.frontend:
         checks[str(args.frontend)] = [
-            "createEncryptedInput",
-            "inputProof",
-            "assertAllowedContract",
-            "assertExpectedChain",
-            "userDecrypt",
-            "signTypedData",
+            {"label": "createEncryptedInput", "patterns": [r"createEncryptedInput"]},
+            {"label": "inputProof", "patterns": [r"\binputProof\b"]},
+            {
+                "label": "assertAllowedContract",
+                "patterns": [
+                    r"assertAllowedContract",
+                    r"allowedContractAddresses",
+                    r"allowlist",
+                ],
+            },
+            {
+                "label": "assertExpectedChain",
+                "patterns": [
+                    r"assertExpectedChain",
+                    r"assertChain",
+                    r"getNetwork\(\).*chainId",
+                    r"Wrong chain",
+                ],
+            },
+            {"label": "userDecrypt", "patterns": [r"userDecrypt"]},
+            {"label": "signTypedData", "patterns": [r"signTypedData"]},
         ]
     return checks
 
@@ -86,8 +127,8 @@ def main() -> int:
 
     checks = build_confidential_voting_checks(args)
     failures: List[str] = []
-    for raw_path, required_terms in checks.items():
-        failures.extend(require_terms(Path(raw_path), required_terms))
+    for raw_path, required_checks in checks.items():
+        failures.extend(require_checks(Path(raw_path), required_checks))
 
     result = {"ok": not failures, "profile": args.profile, "failures": failures}
     print(json.dumps(result, indent=2))

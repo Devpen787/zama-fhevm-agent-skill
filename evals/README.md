@@ -24,6 +24,14 @@ It is a smoke pack for the exact wedge of this repository:
   - deterministic runner that checks required files, required skill clauses, and required proof artifacts
 - `../scripts/run_adversarial_eval.sh`
   - live local-model runner that applies the skill to adversarial prompts and scores whether it narrows, refuses, or degrades safely
+- `codex_behavior_cases.json`
+  - strong-lane structured behavior prompts for `with_skill` and `without_skill` comparison
+- `codex_codegen_cases.json`
+  - strong-lane code generation prompts for `with_skill` and `without_skill` comparison
+- `../scripts/run_codex_behavior_eval.sh`
+  - strong-lane Codex behavior runner
+- `../scripts/run_codex_codegen_eval.sh`
+  - strong-lane Codex code generation runner with artifact-guard and scratch-validation checks
 
 ## What The Smoke Pack Checks
 
@@ -41,6 +49,13 @@ For each prompt case, the runner checks:
 
 The adversarial runner is the separate surface for live prompt-behavior checks.
 
+The Codex strong-lane runners are the separate surface for:
+
+- repeated fresh code generation
+- with-skill versus without-skill comparison
+- deterministic artifact-guard checks
+- scratch Hardhat validation for generated contract/test outputs
+
 Those stronger proof surfaces remain in:
 
 - `validation/results.md`
@@ -56,6 +71,13 @@ For fresh adversarial prompt runs against the local model lane:
 
 ```bash
 ./scripts/run_adversarial_eval.sh
+```
+
+For strong-lane Codex behavior and code generation runs:
+
+```bash
+bash ./scripts/run_codex_behavior_eval.sh
+bash ./scripts/run_codex_codegen_eval.sh
 ```
 
 The runner prints:

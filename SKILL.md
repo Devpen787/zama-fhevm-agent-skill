@@ -103,11 +103,21 @@ If any of the first four inputs are missing and the ambiguity is material, ask f
 7. Generate the test path.
    - Start from `templates/test-template.ts` when possible.
    - Include the main encrypted flow and at least one access-control check.
+   - For requests close to the validated confidential-voting lane, tests are incomplete unless they cover:
+     - tampered `inputProof`
+     - signer mismatch on encrypted input
+     - contract-address mismatch on encrypted input
+     - unauthorized finalization or decrypt attempts
+   - If the environment or scope cannot support those negative-path tests, downgrade scope explicitly instead of silently omitting them.
 
 8. Generate the frontend integration path if requested.
    - Use `templates/frontend-template.ts` and `references/frontend-integration.md`.
    - Make the encryption, submission, and decryption flow explicit.
    - If decrypt behavior is requested, prefer the documented relayer SDK `userDecrypt` path unless the request explicitly requires public decryption.
+   - For requests close to the validated confidential-voting lane, frontend output is incomplete unless it includes:
+     - a contract allowlist or equivalent contract-address gate
+     - an explicit chain check before encrypted input or decrypt flow
+     - the typed-signature-backed decrypt path when actor-specific reveal is used
 
 9. Run an anti-pattern check before finalizing.
    - Review against `references/common-anti-patterns.md`.
@@ -132,6 +142,7 @@ If any of the first four inputs are missing and the ambiguity is material, ask f
 
 14. When the request matches the confidential-voting validation target, treat the repo templates as proof-bearing defaults, not just inspiration.
     - When concrete files are produced, run `scripts/check_generated_artifact.py` against the generated contract, test, and frontend files whenever the environment allows it.
+    - If generated files do not preserve the validated negative-path tests or frontend guardrails, revise them before returning.
 
 ## Stability Rules
 
@@ -196,6 +207,7 @@ Always include:
 
 - a short `Assumptions` section if anything material was inferred
 - a short `Risks` section if deployability or correctness is not fully verified
+- all required negative-path tests and frontend guardrails for the validated lane, unless the answer explicitly downgrades scope and says why
 
 Do not return:
 
@@ -341,6 +353,12 @@ Before finalizing, check:
 
 12. `user-execution resilience check`
    - If the prompt was vague, pressured, or slightly off-target, did the answer still recover safely, state assumptions, and avoid off-label expansion?
+
+13. `negative-path coverage check`
+   - If the request stayed in the confidential-voting validated lane, did the tests include tampered-proof, signer-mismatch, and contract-mismatch coverage rather than only happy-path or ACL-only checks?
+
+14. `frontend-guardrail check`
+   - If a frontend flow was requested, did it preserve the validated contract allowlist, chain check, and typed-signature decrypt guardrails instead of simplifying them away?
 
 If any check fails, revise before returning.
 

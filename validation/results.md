@@ -8,6 +8,7 @@ Purpose:
 ## Final Status
 
 - `skill packaging`: pass
+- `strong-lane codex generation`: pass
 - `contract and test path`: pass
 - `live browser replay`: pass
 
@@ -37,7 +38,20 @@ What it proves:
 - a fresh contract is deployed for each replay
 - the browser can submit an encrypted vote, finalize the contract, and render the decrypted result
 
-### 3. Replay artifacts
+### 3. Strong-lane Codex evaluation
+
+Artifact:
+
+- `validation/run9_codex_strong_lane_output.md`
+
+What it proves:
+
+- in a strong generation lane, the skill materially changes model behavior
+- `with_skill` code generation passed `3/3`
+- `without_skill` code generation passed `1/2`
+- the failing baseline run drifted to a different public-reveal architecture and dropped validated guardrails
+
+### 4. Replay artifacts
 
 Artifacts:
 
@@ -54,8 +68,9 @@ What they prove:
 The repository is treated as validated only if all of the following hold:
 
 1. the skill remains aligned with the Zama/FHEVM path in `SKILL.md`
-2. the contract/test path still passes in the Hardhat template
-3. the live browser replay still completes end to end
+2. strong-lane code generation still holds on the validated target
+3. the contract/test path still passes in the Hardhat template
+4. the live browser replay still completes end to end
 
 ## Current Proof Boundary
 
@@ -68,5 +83,6 @@ This repository does **not** claim:
 This repository **does** claim:
 
 - a narrow, reviewable, replayable Zama/FHEVM skill path for one confidential application target
+- stronger repeatability in a strong generation lane when the skill is applied
 - compile-backed and test-backed validation for the core contract/test target
 - a live browser replay for the validated local path

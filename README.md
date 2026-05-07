@@ -9,6 +9,7 @@ This repository gives an AI coding agent a Zama-specific build path for one vali
 ## What This Proves
 
 - a Zama/FHEVM skill can constrain an agent to a real implementation path instead of generic Solidity output
+- in a strong generation lane, the skill improves repeatability against the same prompt instead of only describing the right path
 - the confidential-voting target compiles and passes in the official `zama-ai/fhevm-hardhat-template`
 - the browser replay proves the validated `submit -> finalize -> decrypt` path on a fresh local deployment
 
@@ -96,6 +97,7 @@ The validated narrow path is:
 
 Current evidence includes:
 
+- strong-lane `with_skill` versus `without_skill` comparison in `validation/run9_codex_strong_lane_output.md`
 - compile-backed validation in the official `zama-ai/fhevm-hardhat-template`
 - stress-extended Hardhat tests for malformed proof, wrong signer, wrong contract, boundary-time, decrypt authorization, and tally correctness cases
 - browser-driven `submit -> finalize -> decrypt` proof against a fresh local deployment
