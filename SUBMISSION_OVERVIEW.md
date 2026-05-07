@@ -41,6 +41,7 @@ The repository combines:
 
 It also adds an explicit reliability layer for privacy-sensitive generation:
 
+- `EVALUATION_SCORECARD.md`
 - `RELIABILITY_CONTRACT.md`
 - `DRIFT_AND_UPDATE_POLICY.md`
 - `FAILURE_MODES.md`
@@ -87,14 +88,15 @@ It is the smallest validated proof target, not the full limit of the repositoryâ
 ## Reviewer Walkthrough
 
 1. `README.md`
-2. `SKILL.md`
-3. `RELIABILITY_CONTRACT.md`
-4. `FAILURE_MODES.md`
-5. `LANE_POLICY.md`
-6. `examples/confidential-voting-contract.sol`
-7. `examples/confidential-voting.test.ts`
-8. `validation/results.md`
-9. `LIVE_REPLAY.md`
+2. `EVALUATION_SCORECARD.md`
+3. `SKILL.md`
+4. `RELIABILITY_CONTRACT.md`
+5. `FAILURE_MODES.md`
+6. `LANE_POLICY.md`
+7. `examples/confidential-voting-contract.sol`
+8. `examples/confidential-voting.test.ts`
+9. `validation/results.md`
+10. `LIVE_REPLAY.md`
 
 ## What Is Proven vs Not Proven
 

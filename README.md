@@ -16,14 +16,15 @@ This repository gives an AI coding agent a Zama-specific build path for one vali
 ## Reviewer Path
 
 1. read `SUBMISSION_OVERVIEW.md`
-2. read `SKILL.md`
-3. read `RELIABILITY_CONTRACT.md`
-4. read `FAILURE_MODES.md`
-5. read `LANE_POLICY.md`
-6. inspect `examples/confidential-voting-contract.sol`
-7. inspect `examples/confidential-voting.test.ts`
-8. inspect `validation/results.md`
-9. inspect `LIVE_REPLAY.md`
+2. read `EVALUATION_SCORECARD.md`
+3. read `SKILL.md`
+4. read `RELIABILITY_CONTRACT.md`
+5. read `FAILURE_MODES.md`
+6. read `LANE_POLICY.md`
+7. inspect `examples/confidential-voting-contract.sol`
+8. inspect `examples/confidential-voting.test.ts`
+9. inspect `validation/results.md`
+10. inspect `LIVE_REPLAY.md`
 
 ## What It Does
 
@@ -69,6 +70,8 @@ The validated demo target is confidential voting because it is the smallest proo
   - confidential-voting validation target and inspectable artifacts
 - `validation/`
   - results log and run artifacts
+- `EVALUATION_SCORECARD.md`
+  - compact metrics for smoke eval, artifact guard, strong-lane comparison, Hardhat validation, and live replay
 - `RELIABILITY_CONTRACT.md`
   - guarantees, refusals, and degraded-mode rules
 - `DRIFT_AND_UPDATE_POLICY.md`
