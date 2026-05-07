@@ -103,12 +103,14 @@ cp "$REPO_ROOT/runtime-helpers/"*.ts "$SCRATCH_ROOT/scripts/"
   npm run build >/dev/null
 )
 
-if ! port_open 8545; then
-  start_background "cd '$SCRATCH_ROOT' && npx hardhat node --hostname 127.0.0.1" "$HARDHAT_LOG" "$HARDHAT_PID_FILE"
-  wait_for_port 8545 "Hardhat node"
-fi
-
+stop_listener_on_port 8545
 stop_listener_on_port 4177
+: >"$HARDHAT_LOG"
+: >"$PREVIEW_LOG"
+
+start_background "cd '$SCRATCH_ROOT' && npx hardhat node --hostname 127.0.0.1" "$HARDHAT_LOG" "$HARDHAT_PID_FILE"
+wait_for_port 8545 "Hardhat node"
+
 cat <<EOF
 Live video demo is ready.
 

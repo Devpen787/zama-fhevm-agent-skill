@@ -13,7 +13,7 @@ async function main() {
   const now = latestBlock?.timestamp ?? Math.floor(Date.now() / 1000);
   // Keep the live demo resilient to browser delays and local process jitter.
   const startTime = now - 300;
-  const endTime = now + 1800;
+  const endTime = now + 86400;
 
   const factory = await ethers.getContractFactory("ConfidentialVotingTemplate");
   const contract = await factory.deploy(adminAddress, startTime, endTime, [eligibleVoter]);

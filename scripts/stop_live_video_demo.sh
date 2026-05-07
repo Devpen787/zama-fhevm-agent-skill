@@ -11,4 +11,11 @@ for pid_file in /tmp/zama-live-video-hardhat.pid /tmp/zama-live-video-preview.pi
   fi
 done
 
+for port in 8545 4177; do
+  pids="$(lsof -t -nP -iTCP:"$port" -sTCP:LISTEN 2>/dev/null || true)"
+  if [[ -n "$pids" ]]; then
+    echo "$pids" | xargs kill
+  fi
+done
+
 echo "Stopped any demo services started by prepare_live_video_demo.sh"

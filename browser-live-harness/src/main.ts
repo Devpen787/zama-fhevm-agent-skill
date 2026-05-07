@@ -273,6 +273,20 @@ function formatTimestampRange(startTime: number, endTime: number): string {
   return `${startTime} → ${endTime}`;
 }
 
+function formatRunError(error: unknown): string {
+  const message = error instanceof Error ? error.message : "unknown error";
+  if (message.includes("0x66b6cb4a") || message.includes("VotingClosed")) {
+    return "Voting window closed before submit. Restart the live demo stack or click Run again after the stack is clean.";
+  }
+  if (message.includes("0xc59b6a75") || message.includes("NotEligibleVoter")) {
+    return "The local demo wallet is not eligible for this fresh contract. Restart the live demo stack and run again.";
+  }
+  if (message.includes("0x9fbfc589") || message.includes("AlreadySubmitted")) {
+    return "This wallet already submitted on the current contract. Click Run again to deploy a fresh contract.";
+  }
+  return message;
+}
+
 async function loadConfig(): Promise<LiveConfig> {
   const response = await fetch("/live-config.json");
   if (!response.ok) {
@@ -375,7 +389,7 @@ async function runLiveFlow(): Promise<void> {
     );
     setOverallStatus("pass", "Pass: the end-to-end proof completed cleanly");
   } catch (error) {
-    const message = error instanceof Error ? error.message : "unknown error";
+    const message = formatRunError(error);
     pushLog(`Run failed: ${message}`);
     metricResultNode && (metricResultNode.textContent = "Run failed. Open the technical log.");
     const runningStep = steps.find((step) => step.state === "running");
