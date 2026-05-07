@@ -99,7 +99,7 @@ The validated demo target is confidential voting because it is the smallest proo
 - `SKILL.md`
   - core instruction layer for the agent
 - `references/`
-  - compact Zama-specific guidance on encrypted types, ACL, proofs, decryption, frontend flow, and anti-patterns
+  - compact Zama-specific guidance on encrypted types, ACL, proofs, decryption, frontend flow, anti-patterns, and the OpenZeppelin Confidential Contracts / ERC-7984 lane
 - `templates/`
   - validated starting points for contract, test, and frontend paths
 - `examples/`

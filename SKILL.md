@@ -64,6 +64,7 @@ Before generating code, gather or infer these inputs:
    - `references/decryption-patterns.md`
    - `references/frontend-integration.md`
    - `references/common-anti-patterns.md`
+   - `references/openzeppelin-confidential-contracts.md`
    - `templates/contract-template.sol`
    - `templates/frontend-template.ts`
    - `templates/test-template.ts`
@@ -140,7 +141,12 @@ If any of the first four inputs are missing and the ambiguity is material, ask f
 
 13. Return only the requested deliverables plus unresolved risks.
 
-14. When the request matches the confidential-voting validation target, treat the repo templates as proof-bearing defaults, not just inspiration.
+14. For OpenZeppelin Confidential Contracts or ERC-7984 requests, read `references/openzeppelin-confidential-contracts.md` first.
+    - Do not adapt the confidential-voting template into a token contract.
+    - Do not invent OpenZeppelin token APIs without checking the installed package or official docs.
+    - State whether the result is a scaffold or a compile-tested token implementation.
+
+15. When the request matches the confidential-voting validation target, treat the repo templates as proof-bearing defaults, not just inspiration.
     - When concrete files are produced, run `scripts/check_generated_artifact.py` against the generated contract, test, and frontend files whenever the environment allows it.
     - If generated files do not preserve the validated negative-path tests or frontend guardrails, revise them before returning.
 
