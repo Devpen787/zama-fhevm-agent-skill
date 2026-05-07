@@ -13,6 +13,13 @@ It is a compact build system for AI coding agents that:
 - includes a concrete validation target
 - is backed by compile, test, and live replay evidence
 
+Direct reviewer answers:
+
+- This is a skill submission, not a voting-product submission. Voting is the smallest validation target that exercises the FHEVM risks the skill is meant to control.
+- The live proof is local/hybrid by design. It is not presented as Sepolia, Vercel, or a public browser-relayer deployment.
+- The evidence proves a narrow validated lane, not universal correctness for every future confidential app.
+- The intended review action is to run `./scripts/prepare_live_video_demo.sh`, open `http://127.0.0.1:4177/`, and replay the proof.
+
 ## Strategic Fit
 
 Zama is pushing toward confidential-finance-class applications where implementation details matter:

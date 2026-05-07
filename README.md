@@ -13,6 +13,24 @@ This repository gives an AI coding agent a Zama-specific build path for one vali
 - the confidential-voting target compiles and passes in the official `zama-ai/fhevm-hardhat-template`
 - the browser replay proves the validated `submit -> finalize -> decrypt` path on a fresh local deployment
 
+## Reviewer FAQ
+
+Is this submission a skill or a voting app?
+
+- It is a Zama/FHEVM agent skill. Confidential voting is the validation target used to prove the skill can steer an agent through encrypted input, ACL, finalization, tests, frontend integration, and decrypt boundaries.
+
+Why not a public Sepolia or Vercel demo?
+
+- The current proof is intentionally local and replayable. The browser harness depends on a local Hardhat node plus helper endpoints for repeatable encrypt/decrypt boundaries. A hosted proof would be a separate deployment claim with backend, relayer/KMS/ACL, network, and decrypt configuration.
+
+Does this prove every future generated app is correct?
+
+- No. It proves one narrow, validated FHEVM lane and provides artifact guards, canary checks, drift policy, and failure-mode rules to keep future agent output inside that lane or force revalidation.
+
+What should a reviewer run first?
+
+- Run `./scripts/prepare_live_video_demo.sh`, open `http://127.0.0.1:4177/`, and click `Run End-to-End Proof`. The expected result is a fresh deployment, encrypted vote transaction, `finalized=true`, and decrypted yes-vote tally `1`.
+
 ## Reviewer Path
 
 1. read `SUBMISSION_OVERVIEW.md`
