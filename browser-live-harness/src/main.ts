@@ -270,12 +270,22 @@ function updateStep(id: string, state: StepState, detail: string): void {
 }
 
 function formatTimestampRange(startTime: number, endTime: number): string {
-  const formatTime = (timestamp: number) =>
-    new Intl.DateTimeFormat("en", {
-      dateStyle: "medium",
-      timeStyle: "medium",
+  const formatTime = (timestamp: number) => {
+    const date = new Date(timestamp * 1000);
+    const datePart = new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(date);
+    const timePart = new Intl.DateTimeFormat("en", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
       timeZoneName: "short",
-    }).format(new Date(timestamp * 1000));
+    }).format(date);
+
+    return `${datePart}, ${timePart}`;
+  };
 
   return `${formatTime(startTime)} -> ${formatTime(endTime)}`;
 }
